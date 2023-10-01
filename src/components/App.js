@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import FrontEnd from './FrontEnd';
 import BackEnd from './BackEnd';
+import "./App.css"
+import { Button, InstUISettingsProvider, canvas } from '@instructure/ui'
 
 function App() {
     const [currentPage, setCurrentPage] = useState(null);
     const changePage = (page) => {
         setCurrentPage(page);
+
     };
 
     return (

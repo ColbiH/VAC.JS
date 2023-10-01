@@ -1,14 +1,26 @@
 import React from 'react';
-
+import { Button, InstUISettingsProvider, canvas } from '@instructure/ui'
+import './FrontEnd.css'
 function FrontEnd() {
-    return (
-        <div>
-            <h1>This is the playground for the Front End</h1>
-            {
 
-            }
+    return (
+    <div className="front">
+        <header className="PDF-header">
+        <div id="main">
+
+            <h1>PDF View</h1>
         </div>
-    );
+        </header>
+
+        <InstUISettingsProvider theme={canvas}>
+            <Button className= "quiz"  > Save as PDF</Button>
+
+        </InstUISettingsProvider>
+
+
+    </div>
+
+    )
 }
 
 export default FrontEnd;
