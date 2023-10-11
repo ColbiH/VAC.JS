@@ -1,26 +1,14 @@
 import React from 'react';
-import { Button, Flex, Img, InstUISettingsProvider, instructure, View} from "@instructure/ui";
+import { Button, Flex, Img, InstUISettingsProvider, canvas} from "@instructure/ui";
 import Image from "../quiz.png";
-//import styled from "styled-components";
-
-
-// const Button = styled.button`
-//   background-color: black;
-//   color: white;
-//   font-size: 20px;
-//   padding: 10px 60px;
-//   border-radius: 5px;
-//   margin: 10px 0px;
-//   cursor: pointer;
-// `;
 
 function sayHello() {
-    alert('You clicked me!');
+    alert('Here is the pdf preview.');
 }
 
-function FrontEnd() {
+function Jenny() {
     return (
-        <InstUISettingsProvider theme={instructure}>
+        <InstUISettingsProvider theme={canvas}>
         <>
             <Flex justifyItems = "space-around">
                 <Flex.Item shouldShrink shouldGrow textAlign = "center">
@@ -53,4 +41,4 @@ function FrontEnd() {
     );
 }
 
-export default FrontEnd;
+export default Jenny;
