@@ -13,7 +13,7 @@ function FrontEnd() {
         </header>
 
         <InstUISettingsProvider theme={canvas}>
-            <Button className= "quiz"  > Save as PDF</Button>
+            <Button className= "quiz" size= "large"  > Save as PDF</Button>
 
         </InstUISettingsProvider>
 
