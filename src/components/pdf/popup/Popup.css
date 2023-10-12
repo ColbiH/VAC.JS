@@ -1,0 +1,33 @@
+.header{
+    /*text-indent: 50px; */
+    text-align: center;
+    color: #2D3B45 !important;
+    font-size: 22px;
+}
+.quiz-view {
+
+    position: absolute;
+    top: 50px;
+    left: 25px;
+    /*float:left; */
+    width: 300px;
+    height: 400px;
+
+    border-style: solid !important;
+    border-color: #2D3B45 !important;
+    border: 2px;
+
+    display: flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+.options {
+    position: absolute;
+    top: 150px;
+    right: -50px;
+    /*float: right; */
+
+    width: 300px;
+}
