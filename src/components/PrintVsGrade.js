@@ -1,29 +1,35 @@
 import React, { useState } from 'react';
 import {Button, InstUISettingsProvider, canvas, IconPrinterLine, IconGradebookLine} from "@instructure/ui";
-import Sam from './Sam';
+import FetchClassesAndQuizzes from "../api/FetchClassesAndQuizzes";
 
-function PrintVsGrade() {
+function PrintVsGrade({ apiKey, canvasurl }) {
     const [currentPage, setCurrentPage] = useState(null);
     const changePage = (page) => {
         setCurrentPage(page);
     };
 
     return (
-        <InstUISettingsProvider theme={canvas}>
-            <div>
-                {currentPage === null && <Button
-                    size = "large"
-                    margin = "small"
-                    onClick={() => changePage('sam')}
-                    renderIcon={IconPrinterLine}></Button>}
-                {currentPage === 'sam' && <Sam />}
+        <div>
+            <p>API Key: {apiKey}</p>
+            <p>URL: {canvasurl}</p>
+            {<InstUISettingsProvider theme={canvas}>
+                <div>
+                    {currentPage === null && <Button
+                        size = "large"
+                        margin = "small"
+                        onClick={() => changePage('sam')}
+                        renderIcon={IconPrinterLine}></Button>}
+                    <FetchClassesAndQuizzes apiKey={apiKey} canvasurl={canvasurl} />
 
-                {currentPage === null && <Button
-                    size = "large"
-                    margin = "small"
-                    renderIcon={IconGradebookLine}></Button>}
-            </div>
-        </InstUISettingsProvider>
+                    {currentPage === null && <Button
+                        size = "large"
+                        margin = "small"
+                        renderIcon={IconGradebookLine}></Button>}
+                </div>
+            </InstUISettingsProvider>}
+        </div>
+
+
     );
 }
 

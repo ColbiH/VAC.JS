@@ -11,7 +11,7 @@ function FetchQuizQuestions() {
         const options = {
             method: 'GET',
             headers: {
-                Authorization: 'Bearer '
+                Authorization: 'Bearer ' //API Key needs to be here to use this portion of code.
             }
         };
 
