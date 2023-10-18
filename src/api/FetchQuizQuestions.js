@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
 import LaTeXBuilder from "../components/LaTeXBuilder";
 
-function FetchQuizQuestions() {
+function FetchQuizQuestions({login, course, quiz}) {
     const [data, setData] = useState([]);
-    const url = 'https://cors-anywhere.herokuapp.com/https://ufl.instructure.com/api/v1/courses/471518/quizzes/1287636/questions';
+    const url = 'https://proxy.cors.sh/https://' + login.canvas_url + '/api/v1/courses/' + course + '/quizzes/' + quiz + '/questions';
 
 
     useEffect(() => {
         const options = {
             method: 'GET',
             headers: {
-                Authorization: 'Bearer ' //API Key needs to be here to use this portion of code.
+                'x-cors-api-key': 'temp_578646f3ba3de0a66ef52336a65f811a',
+                Authorization: 'Bearer ' + login.api_key //API Key needs to be here to use this portion of code.
             }
         };
 

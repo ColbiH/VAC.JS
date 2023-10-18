@@ -10,7 +10,8 @@ function App({ template }) {
     }
 
     useEffect(() => {
-        //iframeRef.current.style.display = 'none';
+        //Makes .WASM Invisible
+        iframeRef.current.style.display = 'none';
     }, []);
 
     return (

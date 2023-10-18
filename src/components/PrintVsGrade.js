@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {Button, InstUISettingsProvider, canvas, IconPrinterLine, IconGradebookLine} from "@instructure/ui";
 import FetchClassesAndQuizzes from "../api/FetchClassesAndQuizzes";
 
-function PrintVsGrade({ apiKey, canvasurl }) {
+function PrintVsGrade({login}) {
     const [currentPage, setCurrentPage] = useState(null);
     const changePage = (page) => {
         setCurrentPage(page);
@@ -10,8 +10,8 @@ function PrintVsGrade({ apiKey, canvasurl }) {
 
     return (
         <div>
-            <p>API Key: {apiKey}</p>
-            <p>URL: {canvasurl}</p>
+            <p>API Key: {login.api_key}</p>
+            <p>URL: {login.canvas_url}</p>
             {<InstUISettingsProvider theme={canvas}>
                 <div>
                     {currentPage === null && <Button
@@ -19,7 +19,7 @@ function PrintVsGrade({ apiKey, canvasurl }) {
                         margin = "small"
                         onClick={() => changePage('sam')}
                         renderIcon={IconPrinterLine}></Button>}
-                    <FetchClassesAndQuizzes apiKey={apiKey} canvasurl={canvasurl} />
+                    <FetchClassesAndQuizzes login={login} />
 
                     {currentPage === null && <Button
                         size = "large"

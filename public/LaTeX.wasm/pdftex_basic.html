@@ -345,6 +345,8 @@ IEEE conference templates contain guidance text for composing and formatting con
         console.log('Message received from parent window:', event.data);
 
         editor.setValue(event.data);
+        //In the listener begin the compile!
+        compile();
     });
 </script>
 

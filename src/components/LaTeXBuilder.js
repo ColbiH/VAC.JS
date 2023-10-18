@@ -77,9 +77,7 @@ function LaTeXBuilder({ data }) {
     return (
         <div>
             <LaTeXWasm template={LaTeXTemplate} />
-            <pre>
-                {JSON.stringify(data, null, 2)}
-            </pre>
+
         </div>
     );
 }

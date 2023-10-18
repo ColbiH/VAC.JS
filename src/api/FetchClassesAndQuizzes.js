@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
-import Sam from '../components/Sam'
+import Sam from '../components/Sam';
 
-function FetchClassesAndQuizzes({ apiKey, canvasurl}) {
+function FetchClassesAndQuizzes({login}) {
     const [classes, setClasses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const url = 'https://cors-anywhere.herokuapp.com/https://' + canvasurl + '/api/v1/courses?enrollment_type=teacher';
+    const url = 'https://proxy.cors.sh/https://' + login.canvas_url + '/api/v1/courses?enrollment_type=teacher';
 
     useEffect(() => {
         const options = {
             method: 'GET',
-            headers: {
-                Authorization: 'Bearer ' + apiKey
-            }
+                headers: {
+                    'x-cors-api-key': 'temp_578646f3ba3de0a66ef52336a65f811a',
+                    Authorization: 'Bearer ' + login.api_key,
+            },
         };
 
         FetchCanvas(url, options)
@@ -20,7 +21,7 @@ function FetchClassesAndQuizzes({ apiKey, canvasurl}) {
                 setClasses(classData);
 
                 const classPromises = classData.map((classInfo) => {
-                    return FetchCanvas(`https://cors-anywhere.herokuapp.com/https://${canvasurl}/api/v1/courses/${classInfo.id}/quizzes`, options)
+                    return FetchCanvas(`https://proxy.cors.sh/https://${login.canvas_url}/api/v1/courses/${classInfo.id}/quizzes`, options)
                         .then((quizData) => {
                             classInfo.quizzes = quizData;
                             return classInfo;
@@ -44,18 +45,24 @@ function FetchClassesAndQuizzes({ apiKey, canvasurl}) {
             });
     }, []);
 
-    return (
-        <div>
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : (
-                <>
-                    {JSON.stringify(classes, null, 2)}
-                    <Sam classes={classes} />
-                </>
-            )}
-        </div>
-    );
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+
+    if (classes.length > 0) {
+        const firstClass = classes[0];
+        if (firstClass.quizzes) {
+            return (
+                <div>
+                    <Sam login={login} classes={classes} />
+                </div>
+            );
+        } else {
+            return <p>No quizzes available for the first class.</p>;
+        }
+    }
+
+    return <p>No classes available for this teacher.</p>;
 }
 
 export default FetchClassesAndQuizzes;

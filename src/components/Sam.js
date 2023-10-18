@@ -13,50 +13,81 @@ import {
 } from "@instructure/ui";
 import "./Sam.css";
 import { Popup } from "./pdf/popup/Popup";
-
-const jsonData = {
-    classes: {
-        id: 1,
-        name: "Classes",
-        collections: [
-            {
-                id: 2,
-                name: "COP 3502",
-                descriptor: "Programming Fundamentals 1",
-                collections: [],
-                items: [
-                    { id: 1, name: "Assignment 1" },
-                    { id: 2, name: "Assignment 2" },
-                ],
-            },
-            {
-                id: 3,
-                name: "COP 3503",
-                descriptor: "Programming Fundamentals 2",
-                collections: [],
-                items: [
-                    { id: 3, name: "Coding Problem 1" },
-                ],
-            },
-        ],
-        items: [],
-    },
-};
+import FetchQuizQuestions from "../api/FetchQuizQuestions";
 
 function transformDataForTreeBrowser(classes) {
-    const collections = {};
-        collections[1] = {
-            id: classes[0].id,
-            name: JSON.stringify(classes[0].name),
+    const collections = {
+        1: {
+            id: 1,
+            name: "Classes",
             collections: [],
-            items: [
-                {
-                    id: 1,
-                    name: "Yeah", //JSON.stringify(classes[0].quizzes[0].title),
-                },
-            ],
-        };
+            items: [],
+        },
+    };
+
+    if (Array.isArray(classes) && classes.length > 0) {
+        for (let i = 0; i < classes.length; i++) {
+            const classInfo = classes[i];
+            collections[1].collections.push(classInfo.id);
+
+            collections[classInfo.id] = {
+                id: classInfo.id,
+                name: classInfo.name,
+                collections: [],
+                items: [],
+            };
+
+            if (Array.isArray(classInfo.quizzes) && classInfo.quizzes.length > 0) {
+                for (let j = 0; j < classInfo.quizzes.length; j++) {
+                    const quiz = classInfo.quizzes[j];
+                    collections[classInfo.id].items.push(quiz.id);
+                }
+            }
+        }
+    }
+
+
     return collections;
+}
+
+function transformDataForItems(classes) {
+    const collections = {
+        1: {
+            id: 1,
+            name: "Classes",
+            collections: [],
+            items: {},
+        },
+    };
+
+    if (Array.isArray(classes) && classes.length > 0) {
+        for (let i = 0; i < classes.length; i++) {
+            const classInfo = classes[i];
+            collections[1].collections.push(classInfo.id);
+
+            collections[classInfo.id] = {
+                id: classInfo.id,
+                name: classInfo.name,
+                collections: [],
+                items: {},
+            };
+
+            if (Array.isArray(classInfo.quizzes) && classInfo.quizzes.length > 0) {
+                for (let j = 0; j < classInfo.quizzes.length; j++) {
+                    const quiz = classInfo.quizzes[j];
+                    collections[1].items[quiz.id] = {
+                        id: quiz.id,
+                        name: quiz.title,
+                        course_id: classInfo.id,
+                        collections: [],
+                        items: {},
+                    };
+                }
+            }
+        }
+    }
+    //console.log(collections);
+    return collections[1].items;
 }
 
 
@@ -74,14 +105,20 @@ const modalStyle = {
     },
 };
 
-function Example({classes}) {
+function Example({login, classes}) {
     const [size, setSize] = useState("medium");
-
+    const [clickedItem, setClickedItem] = useState(null);
     const sizes = ["small", "medium", "large"];
 
     const handleSizeSelect = (e, newSize) => {
         setSize(newSize);
     };
+
+    const handleItemClick = (item) => {
+        setClickedItem(item);
+    };
+
+
 
     return (
         <>
@@ -99,23 +136,28 @@ function Example({classes}) {
                 </RadioInputGroup>
             </View>
 
+
             <TreeBrowser
                 size={size}
                 collections={transformDataForTreeBrowser(classes)}
-                items={{}}
+                items={transformDataForItems(classes)}
                 defaultExpanded={[1]}
                 rootId={1}
+                onItemClick={handleItemClick}
             />
+            {clickedItem !== null && (
+                <FetchQuizQuestions login={login} course={transformDataForItems(classes)[clickedItem.id].course_id} quiz={clickedItem.id} />
+            )}
         </>
     );
 }
 
-function Sam({classes}) {
+function Sam({login, classes}) {
     const [modalOpen, setModalOpen] = useState(false);
     return (
         <>
             <div style={{ paddingRight: 200 }}>
-                <Example classes={classes}/>
+                <Example login={login} classes={classes}/>
             </div>
 
             <div className="preview">
