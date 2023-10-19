@@ -1,0 +1,53 @@
+/* Style for the login container */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+/* Style for the login form */
+.login-form {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+/* Style for the heading */
+.login-form h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Style for the user icon */
+.user-icon {
+    margin: 10px 0;
+}
+
+/* Style for text inputs */
+.TextInput {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Style for the login button */
+.Button {
+    background-color: #0073e6;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.Button:hover {
+    background-color: #005bb8;
+}
