@@ -14,7 +14,6 @@ function extractContentBetweenPTags(inputString) {
 }
 
 function Template(data) {
-    // Extract the desired values
     let LaTeXTemplate = "\\documentclass[addpoints]{exam}\n" +
         "\\usepackage{comment}\n" +
         "\\usepackage{multicol}\n" +
