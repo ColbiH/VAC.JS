@@ -5,9 +5,16 @@ import PrintVsGrade from './PrintVsGrade';
 
 function Login() {
     const [currentPage, setCurrentPage] = useState(null);
+    const [api_key, setApi_Key] = useState('');
+    const [canvas_url, setcanvas_Url] = useState('');
 
     const changePage = (page) => {
         setCurrentPage(page);
+    };
+
+    const login = {
+        api_key: api_key,
+        canvas_url: canvas_url
     };
 
     return (
@@ -19,17 +26,17 @@ function Login() {
                         <TextInput
                             renderLabel="API key"
                             placeholder="abc1234ABC5678"
-                            onChange={(event, value) => { console.log(value) }}
+                            onChange={(event, value) => setApi_Key(value)}
                         />
                         <TextInput
                             renderLabel="URL"
                             placeholder="www.ufl.edu"
-                            onChange={(event, value) => { console.log(value) }}
+                            onChange={(event, value) => setcanvas_Url(value)}
                         />
                         <Button onClick={() => changePage('printvsgrade')}>Login</Button>
                     </div>
                 )}
-                {currentPage === 'printvsgrade' && <PrintVsGrade />}
+                {currentPage === 'printvsgrade' && <PrintVsGrade login={login}/>}
             </div>
         </InstUISettingsProvider>
     );
