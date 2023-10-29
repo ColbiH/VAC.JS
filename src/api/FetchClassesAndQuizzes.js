@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
 import Sam from '../components/Sam';
+import {Spinner} from "@instructure/ui";
 
 function FetchClassesAndQuizzes({login}) {
     const [classes, setClasses] = useState([]);
@@ -11,7 +12,7 @@ function FetchClassesAndQuizzes({login}) {
         const options = {
             method: 'GET',
                 headers: {
-                    'x-cors-api-key': 'temp_578646f3ba3de0a66ef52336a65f811a',
+                    'x-cors-api-key': 'temp_ce104861724fc67b306eacafd84230a4',
                     Authorization: 'Bearer ' + login.api_key,
             },
         };
@@ -46,7 +47,8 @@ function FetchClassesAndQuizzes({login}) {
     }, []);
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        // return <p>Loading...</p>;
+        return <Spinner renderTitle="Loading" size="small" margin="0 0 0 medium" />;
     }
 
     if (classes.length > 0) {
@@ -54,7 +56,10 @@ function FetchClassesAndQuizzes({login}) {
         if (firstClass.quizzes) {
             return (
                 <div>
-                    <Sam login={login} classes={classes} />
+                    <Sam classes={classes} />
+                    {/*<Sam {state = {login: login}, {classes : classes}} />*/}
+                    {/*{state = {login: {login}}};*/}
+                    {/*<Sam {state = {classes: {classes}}}/>*/}
                 </div>
             );
         } else {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useRef, useState} from "react";
 import Modal from "react-modal";
 import {
     Button,
@@ -14,6 +14,9 @@ import {
 import "./Sam.css";
 import { Popup } from "./pdf/popup/Popup";
 import FetchQuizQuestions from "../api/FetchQuizQuestions";
+import {useLocation} from "react-router-dom";
+import FetchClassesAndQuizzes from "../api/FetchClassesAndQuizzes";
+import Sidebar from "./Sidebar";
 
 function transformDataForTreeBrowser(classes) {
     const collections = {
@@ -90,8 +93,6 @@ function transformDataForItems(classes) {
     return collections[1].items;
 }
 
-
-
 const modalStyle = {
     content: {
         top: "50%",
@@ -105,46 +106,54 @@ const modalStyle = {
     },
 };
 
-function Example({login, classes}) {
+function Example(classes) {
     const [size, setSize] = useState("medium");
     const [clickedItem, setClickedItem] = useState(null);
-    const sizes = ["small", "medium", "large"];
+    //const sizes = ["small", "medium", "large"];
+    const { state: { login } = {} } = useLocation();
+    //const { state: { classes } = {} } = useLocation();
 
-    const handleSizeSelect = (e, newSize) => {
-        setSize(newSize);
-    };
+    // const handleSizeSelect = (e, newSize) => {
+    //     setSize(newSize);
+    // };
 
     const handleItemClick = (item) => {
         setClickedItem(item);
     };
 
-
-
     return (
         <>
-            <View display="block" margin="none none medium">
-                <RadioInputGroup
-                    name="treeBrowserSize"
-                    defaultValue="medium"
-                    description={<ScreenReaderContent>TreeBrowser size selector</ScreenReaderContent>}
-                    variant="toggle"
-                    onChange={handleSizeSelect}
-                >
-                    {sizes.map((size) => (
-                        <RadioInput key={size} label={size} value={size} />
-                    ))}
-                </RadioInputGroup>
-            </View>
 
+            <p>API Key: {login.api_key}</p>
+            <p>URL: {login.canvas_url}</p>
+            <p>Classes: {classes[0]}</p>
+
+
+            {/*<View display="block" margin="none none medium">*/}
+            {/*    */}
+            {/*    <RadioInputGroup*/}
+            {/*        name="treeBrowserSize"*/}
+            {/*        defaultValue="medium"*/}
+            {/*        description={<ScreenReaderContent>TreeBrowser size selector</ScreenReaderContent>}*/}
+            {/*        variant="toggle"*/}
+            {/*        onChange={handleSizeSelect}*/}
+            {/*    >*/}
+            {/*        {sizes.map((size) => (*/}
+            {/*            <RadioInput key={size} label={size} value={size} />*/}
+            {/*        ))}*/}
+            {/*    </RadioInputGroup>*/}
+            {/*</View>*/}
 
             <TreeBrowser
-                size={size}
+                size= 'large'
                 collections={transformDataForTreeBrowser(classes)}
                 items={transformDataForItems(classes)}
                 defaultExpanded={[1]}
                 rootId={1}
                 onItemClick={handleItemClick}
             />
+            {/*////TODO:  Move button from here*/}
+            {/*{window.location.href}*/}
             {clickedItem !== null && (
                 <FetchQuizQuestions login={login} course={transformDataForItems(classes)[clickedItem.id].course_id} quiz={clickedItem.id} />
             )}
@@ -152,38 +161,55 @@ function Example({login, classes}) {
     );
 }
 
-function Sam({login, classes}) {
+function Sam(classes) {
     const [modalOpen, setModalOpen] = useState(false);
+    const { state: { login } = {} } = useLocation();
+    //const { state: { classes } = {} } = useLocation();
+
     return (
         <>
+            <div>
+                <Sidebar/>
+            </div>
             <div style={{ paddingRight: 200 }}>
-                <Example login={login} classes={classes}/>
+                <Example login={login}/>
             </div>
 
-            <div className="preview">
-                <InstUISettingsProvider theme={canvas}>
-                    <Button onClick={() => setModalOpen(true)} color="danger" margin="small">
-                        Preview
-                    </Button>
-                </InstUISettingsProvider>
+            {/*<div className="preview">*/}
+            {/*    <InstUISettingsProvider theme={canvas}>*/}
+            {/*        <Button onClick={() => setModalOpen(true)} color="danger" margin="small">*/}
+            {/*            Preview*/}
+            {/*        </Button>*/}
+            {/*        /!*<iframe*!/*/}
+            {/*        /!*    ref={iframeRef}*!/*/}
+            {/*        /!*    src="/LaTeX.wasm/pdftex_basic.html"*!/*/}
+            {/*        /!*    title="LaTeX Compilation"*!/*/}
+            {/*        /!*    width="100%"*!/*/}
+            {/*        /!*    height="1200"*!/*/}
+            {/*        /!*    frameBorder="0"*!/*/}
+            {/*        /!*    scrolling="no"*!/*/}
+            {/*        /!*></iframe>*!/*/}
 
-                <Modal
-                    className="modal-container"
-                    isOpen={modalOpen}
-                    onRequestClose={() => setModalOpen(false)}
-                    style={modalStyle}
-                >
-                    <div>
-                        <Popup></Popup>
-                    </div>
-                    <CloseButton
-                        onClick={() => setModalOpen(false)}
-                        placement="end"
-                        offset="small"
-                        screenReaderLabel="Close"
-                    />
-                </Modal>
-            </div>
+            {/*        /!*<Button onClick={compileLatexInIframe} color = "danger" margin = "small">Compile LaTeX</Button>*!/*/}
+            {/*    </InstUISettingsProvider>*/}
+
+            {/*    <Modal*/}
+            {/*        className="modal-container"*/}
+            {/*        isOpen={modalOpen}*/}
+            {/*        onRequestClose={() => setModalOpen(false)}*/}
+            {/*        style={modalStyle}*/}
+            {/*    >*/}
+            {/*        <div>*/}
+            {/*            <Popup></Popup>*/}
+            {/*        </div>*/}
+            {/*        <CloseButton*/}
+            {/*            onClick={() => setModalOpen(false)}*/}
+            {/*            placement="end"*/}
+            {/*            offset="small"*/}
+            {/*            screenReaderLabel="Close"*/}
+            {/*        />*/}
+            {/*    </Modal>*/}
+            {/*</div>*/}
         </>
     );
 }

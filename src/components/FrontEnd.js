@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, InstUISettingsProvider, canvas } from '@instructure/ui'
-import './FrontEnd.css'
+import { Button, InstUISettingsProvider, canvas } from '@instructure/ui';
+import './FrontEnd.css';
 function FrontEnd() {
 
     return (
@@ -14,10 +14,7 @@ function FrontEnd() {
 
         <InstUISettingsProvider theme={canvas}>
             <Button className= "quiz" size= "large"  > Save as PDF</Button>
-
         </InstUISettingsProvider>
-
-
     </div>
 
     )
