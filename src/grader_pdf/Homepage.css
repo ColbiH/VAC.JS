@@ -1,0 +1,13 @@
+.quiz-preview {
+  position: fixed;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+}
+  
+.code-grader {
+  position: fixed;
+  top: 50%;
+  left: 65%;
+  transform: translate(-50%, -50%);
+}

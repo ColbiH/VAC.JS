@@ -1,8 +1,10 @@
 import React from "react";
-import './Popup.css';
+import './Preview.css';
 import { Button } from '@instructure/ui';
 
-export const Popup = ({ close }) => (
+//export const Preview = ({ close }) => (
+const Preview = () => {
+  return (
   <div className="modal-content">
     <br/>
     <div className="header"><b>Quiz 1</b></div>
@@ -23,4 +25,6 @@ export const Popup = ({ close }) => (
       
     </div>
   </div>
-);
+  );
+}
+export default Preview;

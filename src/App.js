@@ -1,53 +1,47 @@
-import React, { useState } from "react";
-import Modal from "react-modal";
+import React from "react";
+//import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom"; 
 
-import { Button, CloseButton, InstUISettingsProvider, canvas } from '@instructure/ui' //call specific components from here
-import './App.css';
-import { Popup } from "./pdf/popup/Popup";
+import Login from "./grader_pdf/Login";
+import Homepage from "./grader_pdf/Homepage";
+import Quiz from "./grader_pdf/Quiz";
+import Preview from "./grader_pdf/Preview";
+import Grader from "./grader_pdf/Grader";
 
-//source help: https://www.educative.io/answers/how-to-create-a-modal-in-react-js
-const modalStyle = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "white",
-    width: 400,
-  },
-};
-
-function App() {
-
-  const [modalOpen, setModalOpen] = useState(false);
-  return (
-
-    <div className="preview">
-      <InstUISettingsProvider theme={canvas}>
-        <Button onClick={setModalOpen} color="danger" margin="small">Preview</Button>
-      </InstUISettingsProvider>
-
-      <Modal className="modal-container"
-        isOpen={modalOpen}
-        onRequestClose={() => setModalOpen(false)} 
-        style={modalStyle}
-      >
-        <div>
-          <Popup></Popup> 
-        </div>
-          <CloseButton onClick={() => setModalOpen(false)} placement="end" offset="small" screenReaderLabel="Close" />
-      </Modal>
-    </div>
-
-    /*<div className="preview">
-      <InstUISettingsProvider theme={canvas}>
-        <Button onClick={setModalOpen} color="danger" margin="small">Preview</Button>
-      </InstUISettingsProvider>
-    </div> */
-
-  )
+function App() { 
+  return ( 
+      <> 
+          <Router> 
+              <Routes> 
+                
+              <Route path="/" element={<Login />} />
+              <Route path="/home" element={<Homepage />} />
+              <Route path="/quiz" element={<Quiz />} />
+              <Route path="/grader" element={<Grader />} />
+              <Route path="/preview" element={<Preview />} />
+  
+              </Routes> 
+          </Router> 
+      </> 
+  ); 
 } 
 
+export default App; 
+
+/*
+const App = () => {
+  return (
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/preview" element={<Preview />} />
+          <Route path="/grader" element={<Grader />} />
+        </Routes>
+      </Router>
+  );
+};
+
 export default App;
+*/

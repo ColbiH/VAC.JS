@@ -1,8 +1,8 @@
-.preview {
-  /*background-color: grey;
-  color: rgb(224,6,31);
-  width: 70px;
-  height: 70px; */
+/* Maybe set text font and size here*/
+
+/*css styling for the preview button... may remove*/ 
+/*.preview {
+  
   position: absolute;
   top: 190px;
   right: 80px;
@@ -10,9 +10,7 @@
 
 .modal-container {
   position: relative;
-  /*top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);*/
+ 
 
   width: 700px !important;
   height: 500px !important; 
@@ -23,3 +21,4 @@
   
   display: inline-block;
 }
+*/
