@@ -20,24 +20,17 @@ function Template(data) {
         "\n" +
         "\\begin{document}\n" +
         "\n" +
-        "% -------------------------------------------------------------\n" +
-        "% This code creates the text before the first question\n" +
-        "% -------------------------------------------------------------\n" +
+        "\\vspace{5mm}\n" +
+        "\n" +
+        "\\makebox[\\textwidth]{Name:\\hrulefill\\hfill Score: \\hrulefill}\n" +
+        "\n" +
+        "\\vspace{5mm}\n" +
+        "\n" +
+        "\\makebox[\\textwidth]{Date:\\hrulefill}\n" +
         "\\begin{center}\n" +
         "\\fbox{\\fbox{\\parbox{5.5in}{\\centering\n" +
-        "Answer the below questions about cats!}}}\n" +
+        "Course: Quiz Name}}}\n" +
         "\\end{center}\n" +
-        "\n" +
-        "\\vspace{5mm}\n" +
-        "\n" +
-        "\\makebox[\\textwidth]{Name and section:\\enspace\\hrulefill}\n" +
-        "\n" +
-        "\\vspace{5mm}\n" +
-        "\n" +
-        "\\makebox[\\textwidth]{Instructor’s name:\\enspace\\hrulefill}\n" +
-        "% -------------------------------------------------------------\n" +
-        "\n" +
-        "% Here, the questions begin\n" +
         "\\begin{questions}\n"
 
     if (Array.isArray(data) && data.length > 0) {
@@ -47,21 +40,21 @@ function Template(data) {
             let answerOptions = data[i].answers.map(answer => answer.text);
             if (questionType === "multiple_choice_question") {
                 let multiChoiceQuestion = "\\question " + questionText + " \n" +
-                    "\\begin{checkboxes} \n"
+                    "\\begin{choices} \n"
                 LaTeXTemplate += multiChoiceQuestion;
                 for (let j = 0; j < answerOptions.length; j++) {
                     LaTeXTemplate += "\\choice " + answerOptions[j] + " \n"
                 }
-                LaTeXTemplate += "\\end{checkboxes}\\vspace{1cm}\n"
+                LaTeXTemplate += "\\end{choices}\\vspace{1cm}\n"
             }
             if (questionType === "true_false_question") {
                 let trueFalseQuestion = "\\question " + questionText + " \n" +
-                    "\\begin{checkboxes} \n"
+                    "\\begin{choices} \n"
                 LaTeXTemplate += trueFalseQuestion;
                 for (let j = 0; j < answerOptions.length; j++) {
                     LaTeXTemplate += "\\choice " + answerOptions[j] + " \n"
                 }
-                LaTeXTemplate += "\\end{checkboxes}\\vspace{1cm}\n"
+                LaTeXTemplate += "\\end{choices}\\vspace{1cm}\n"
             }
             if (questionType === "short_answer_question") {
                 let shortAnswerQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
