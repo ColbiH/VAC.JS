@@ -1,17 +1,10 @@
 import {
-    Avatar,
-    Badge,
     IconAdminLine,
-    IconGradebookLine, IconInboxLine, IconPrinterLine,
-    IconUserLine,
-    ScreenReaderContent,
+    IconGradebookLine,
+    IconPrinterLine,
     SideNavBar
 } from "@instructure/ui";
-//import changePage from "./PrintVsGrade";
 import React, {useState} from "react";
-import Login from "./Login.js"
-import Jenny from "./Jenny";
-import Sam from "./Sam";
 import {useLocation, useNavigate} from "react-router-dom";
 
 function Sidebar() {
@@ -19,8 +12,9 @@ function Sidebar() {
     const changePage = (page) => {
         setCurrentPage(page);
     };
-    const { state: { login } = {} } = useLocation();
+    //const { state: { login } = {} } = useLocation();
     const navigate = useNavigate();
+    const location = useLocation();
 
     return (
         <div style={{height: '35rem'}}>
@@ -34,34 +28,20 @@ function Sidebar() {
                 <SideNavBar.Item
                     icon={<IconAdminLine/>}
                     label="Login"
-                    //onclick={() => {changePage('login')}}
                     href = '/login'
                 />
-                {/*<SideNavBar.Item*/}
-                {/*    icon={<IconAdminLine/>}*/}
-                {/*    label="Login"*/}
-                {/*    onClick={() => {changePage('login')}}*/}
-                {/*/>*/}
                 <SideNavBar.Item
                     icon={<IconPrinterLine/>}
                     label="Pdf printer"
-                    // onClick={() => {changePage('sam')}}
-                    onClick={() => navigate('/sam', {state: {login: login }})}
-                    //href = '/sam'
+                    onClick={() => navigate('/fetchclassesquizzes', {state: {login: location.state.login, classes : location.state.classes }})}
                 />
-                {/*<SideNavBar.Item*/}
-                {/*    icon={<IconPrinterLine/>}*/}
-                {/*    label="Pdf printer"*/}
-                {/*    onClick={() => {changePage('sam')}}*/}
-                {/*/>*/}
                 <SideNavBar.Item
                     icon={<IconGradebookLine/>}
                     label="Code Grader"
                     onClick={() => {changePage(null)}}
+                    // onClick={() => navigate('/printvsgrade', {state: {login: location.state.login, classes: location.state.classes }})}
                 />
             </SideNavBar>
-            {/*{currentPage === 'login' && <Login />}*/}
-            {/*{currentPage === 'sam' && <Sam />}*/}
         </div>
 
     );

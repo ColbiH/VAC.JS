@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {Button, InstUISettingsProvider, canvas, IconPrinterLine, IconGradebookLine, Spinner} from "@instructure/ui";
-import FetchClassesAndQuizzes from "../api/FetchClassesAndQuizzes";
+import {Button, InstUISettingsProvider, canvas, IconPrinterLine, IconGradebookLine} from "@instructure/ui";
 import Sidebar from "./Sidebar";
 
 function PrintVsGrade() {
-    const [currentPage, setCurrentPage] = useState(null);
-    const changePage = (page) => {
-        setCurrentPage(page);
-    };
-    const { state: { login } = {} } = useLocation();
+    const location = useLocation();
     const navigate = useNavigate();
 
     return (
@@ -17,21 +12,20 @@ function PrintVsGrade() {
             <div>
                 <Sidebar/>
             </div>
-            <p>API Key: {login.api_key}</p>
-            <p>URL: {login.canvas_url}</p>
+            {/*<p>API Key: {location.state.login.api_key}</p>*/}
+            {/*<p>URL: {location.state.login.canvas_url}</p>*/}
             {<InstUISettingsProvider theme={canvas}>
                 <div>
-                    {currentPage === null && <Button
+                    <Button
                         size = "large"
                         margin = "small"
-                        onClick={() => navigate('/sam', {state: {login: login }})}
-                        renderIcon={IconPrinterLine}></Button>}
-                    <FetchClassesAndQuizzes login={login} />
+                        onClick={() => navigate('/fetchclassesquizzes', {state: {login: location.state.login, classes : location.state.classes }})}
+                        renderIcon={IconPrinterLine}></Button>
 
-                    {currentPage === null && <Button
+                    <Button
                         size = "large"
                         margin = "small"
-                        renderIcon={IconGradebookLine}></Button>}
+                        renderIcon={IconGradebookLine}></Button>
                 </div>
             </InstUISettingsProvider>}
         </div>

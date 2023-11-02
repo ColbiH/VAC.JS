@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
-import Sam from '../components/Sam';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {Spinner} from "@instructure/ui";
 
-function FetchClassesAndQuizzes({login}) {
+function FetchClassesAndQuizzes() {
     const [classes, setClasses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const url = 'https://proxy.cors.sh/https://' + login.canvas_url + '/api/v1/courses?enrollment_type=teacher';
+    const location = useLocation();
+    const navigate = useNavigate();
+    const url = 'https://proxy.cors.sh/https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher';
+
+    // const ConsoleLog = () => {
+    //     console.log(location.state.login);
+    //     console.log(classes[0]);
+    //     console.log(setClasses);
+    // };
+    //
+    // ConsoleLog();
 
     useEffect(() => {
         const options = {
             method: 'GET',
                 headers: {
                     'x-cors-api-key': 'temp_ce104861724fc67b306eacafd84230a4',
-                    Authorization: 'Bearer ' + login.api_key,
+                    Authorization: 'Bearer ' + location.state.login.api_key,
             },
         };
 
@@ -22,7 +32,7 @@ function FetchClassesAndQuizzes({login}) {
                 setClasses(classData);
 
                 const classPromises = classData.map((classInfo) => {
-                    return FetchCanvas(`https://proxy.cors.sh/https://${login.canvas_url}/api/v1/courses/${classInfo.id}/quizzes`, options)
+                    return FetchCanvas(`https://proxy.cors.sh/https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/quizzes`, options)
                         .then((quizData) => {
                             classInfo.quizzes = quizData;
                             return classInfo;
@@ -47,7 +57,6 @@ function FetchClassesAndQuizzes({login}) {
     }, []);
 
     if (isLoading) {
-        // return <p>Loading...</p>;
         return <Spinner renderTitle="Loading" size="small" margin="0 0 0 medium" />;
     }
 
@@ -56,10 +65,7 @@ function FetchClassesAndQuizzes({login}) {
         if (firstClass.quizzes) {
             return (
                 <div>
-                    <Sam classes={classes} />
-                    {/*<Sam {state = {login: login}, {classes : classes}} />*/}
-                    {/*{state = {login: {login}}};*/}
-                    {/*<Sam {state = {classes: {classes}}}/>*/}
+                    {navigate('/sam', {state: {login: location.state.login, classes: classes }})}
                 </div>
             );
         } else {

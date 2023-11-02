@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import {Button, InstUISettingsProvider, Spinner, TextInput} from "@instructure/ui";
+import {Button, InstUISettingsProvider, TextInput} from "@instructure/ui";
 import './Login.css'; // Import a CSS file for styling
-import PrintVsGrade from './PrintVsGrade';
 import {useNavigate} from "react-router-dom";
 
 function Login() {
@@ -9,10 +8,6 @@ function Login() {
     const [api_key, setApi_Key] = useState('');
     const [canvas_url, setcanvas_Url] = useState('');
     const navigate = useNavigate();
-
-    const changePage = (page) => {
-        setCurrentPage(page);
-    };
 
     const login = {
         api_key: api_key,
@@ -36,11 +31,9 @@ function Login() {
                             placeholder="ufl.instructure.com"
                             onChange={(event, value) => setcanvas_Url(value)}
                         />
-                        {/*<Button onClick={() => changePage('printvsgrade')}>Login</Button>*/}
                         <Button onClick={() => navigate("/printvsgrade", {state: {login: login }})}>Login</Button>
                     </div>
                 )}
-                {/*{currentPage === 'printvsgrade' && <PrintVsGrade login={login}/>}*/}
             </div>
         </InstUISettingsProvider>
     );
