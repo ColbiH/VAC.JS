@@ -1,38 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Routes, Route} from 'react-router-dom';
 import Jenny from './Jenny';
 import BackEnd from './BackEnd';
-import Sam from './Sam';
+import QuizzesDisplay from './QuizzesDisplay';
 import Login from './Login';
 import FrontEnd from "./FrontEnd";
-import { Heading } from '@instructure/ui-heading'
-import './App.css'
+import Intro from "./Intro";
+import PrintVsGrade from "./PrintVsGrade";
+import './App.css';
+import FetchClassesAndQuizzes from "../api/FetchClassesAndQuizzes";
 
 function App() {
-    const [currentPage, setCurrentPage] = useState(null);
-    const changePage = (page) => {
-        setCurrentPage(page);
-    };
-
     return (
         <div className="App">
-            <header className="App-header">
-                {currentPage === null && <Heading>WELCOME TO çVAC.JS</Heading>}
-                {currentPage === null && (
-                    <>
-                        <button onClick={() => changePage('jenny')}>Go to Jenny</button>
-                        <button onClick={() => changePage('sam')}>Go to Sam</button>
-                        <button onClick={() => changePage('valentina')}>Go to Valentina</button>
-                        <button onClick={() => changePage('backend')}>Go to BackEnd</button>
-                        <button onClick={() => changePage('login')}>Go to Login</button>
-
-                    </>
-                )}
-            </header>
-            {currentPage === 'jenny' && <Jenny />}
-            {currentPage === 'sam' && <Sam />}
-            {currentPage === 'valentina' && <FrontEnd />}
-            {currentPage === 'backend' && <BackEnd />}
-            {currentPage === 'login' && <Login />}
+            <Routes>
+                <Route path = "/" element = {<Intro />} />
+                <Route path = "/sam" element = {<QuizzesDisplay/>} />
+                <Route path = "/jenny" element = {<Jenny />} />
+                <Route path = "/valentina" element = {<FrontEnd />} />
+                <Route path = "/backend" element = {<BackEnd />} />
+                <Route path = "/login" element = {<Login />}/>
+                <Route path = "/printvsgrade" element = {<PrintVsGrade />} />
+                <Route path = "/fetchclassesquizzes" element = {<FetchClassesAndQuizzes />} />
+            </Routes>
         </div>
     );
 }

@@ -1,35 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {Button, InstUISettingsProvider, canvas, IconPrinterLine, IconGradebookLine} from "@instructure/ui";
-import FetchClassesAndQuizzes from "../api/FetchClassesAndQuizzes";
+import Sidebar from "./Sidebar";
 
-function PrintVsGrade({login}) {
-    const [currentPage, setCurrentPage] = useState(null);
-    const changePage = (page) => {
-        setCurrentPage(page);
-    };
+function PrintVsGrade() {
+    const location = useLocation();
+    const navigate = useNavigate();
 
     return (
         <div>
-            <p>API Key: {login.api_key}</p>
-            <p>URL: {login.canvas_url}</p>
+            <div>
+                <Sidebar/>
+            </div>
+            {/*<p>API Key: {location.state.login.api_key}</p>*/}
+            {/*<p>URL: {location.state.login.canvas_url}</p>*/}
             {<InstUISettingsProvider theme={canvas}>
                 <div>
-                    {currentPage === null && <Button
+                    <Button
                         size = "large"
                         margin = "small"
-                        onClick={() => changePage('sam')}
-                        renderIcon={IconPrinterLine}></Button>}
-                    <FetchClassesAndQuizzes login={login} />
+                        onClick={() => navigate('/fetchclassesquizzes', {state: {login: location.state.login, classes : location.state.classes }})}
+                        renderIcon={IconPrinterLine}></Button>
 
-                    {currentPage === null && <Button
+                    <Button
                         size = "large"
                         margin = "small"
-                        renderIcon={IconGradebookLine}></Button>}
+                        renderIcon={IconGradebookLine}></Button>
                 </div>
             </InstUISettingsProvider>}
         </div>
-
-
     );
 }
 
