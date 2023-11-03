@@ -25,6 +25,7 @@ function PrintVsGrade() {
                     <Button
                         size = "large"
                         margin = "small"
+                        onClick={() => navigate('/fetchclassesassignments', {state: {login: location.state.login, classes : location.state.classes }})}
                         renderIcon={IconGradebookLine}></Button>
                 </div>
             </InstUISettingsProvider>}

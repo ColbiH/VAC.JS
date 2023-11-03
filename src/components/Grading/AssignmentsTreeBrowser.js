@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import {TreeBrowser} from "@instructure/ui";
-import "./QuizzesDisplay.css";
-import FetchQuizQuestions from "../api/FetchQuizQuestions";
-import Sidebar from "./Sidebar";
+import "./AssignmentsDisplay.css"
+import FetchQuizQuestions from "../../api/FetchQuizQuestions";
+import Sidebar from "../Sidebar";
 
 function transformDataForTreeBrowser(classes) {
     const collections = {
@@ -34,6 +34,8 @@ function transformDataForTreeBrowser(classes) {
             }
         }
     }
+
+
     return collections;
 }
 
@@ -64,7 +66,7 @@ function transformDataForItems(classes) {
                     const quiz = classInfo.quizzes[j];
                     collections[1].items[quiz.id] = {
                         id: quiz.id,
-                        name: quiz.title,
+                        name: quiz.name,
                         course_id: classInfo.id,
                         collections: [],
                         items: {},
@@ -73,10 +75,11 @@ function transformDataForItems(classes) {
             }
         }
     }
+    //console.log(collections);
     return collections[1].items;
 }
 
-function QuizzesTreeBrowser({login, classes}) {
+function AssignmentsTreeBrowser({login, classes}) {
     const [clickedItem, setClickedItem] = useState(null);
 
     const handleItemClick = (item) => {
@@ -89,7 +92,7 @@ function QuizzesTreeBrowser({login, classes}) {
                 <Sidebar/>
             </div>
             <TreeBrowser
-                size= "large"
+                size="large"
                 collections={transformDataForTreeBrowser(classes)}
                 items={transformDataForItems(classes)}
                 defaultExpanded={[1]}
@@ -103,4 +106,4 @@ function QuizzesTreeBrowser({login, classes}) {
     );
 }
 
-export default QuizzesTreeBrowser;
+export default AssignmentsTreeBrowser;

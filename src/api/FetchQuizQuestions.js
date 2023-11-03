@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
-import LaTeXBuilder from "../components/LaTeXBuilder";
+import LaTeXBuilder from "../components/Printing/LaTeXBuilder";
 
 function FetchQuizQuestions({login, course, quiz}) {
     const [data, setData] = useState([]);
