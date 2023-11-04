@@ -1,6 +1,7 @@
 {
   "name": "vac.js",
   "version": "0.1.0",
+  "main": "public/electron.js",
   "private": true,
   "dependencies": {
     "@instructure/ui": "^8",
@@ -22,7 +23,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run react\"",
+    "start": "concurrently \"npm run server\" \"npm run electron\"",
+    "electron": "electron .",
+    "react-start": "react-scripts start",
+    "electron-build": "electron-builder",
     "server": "node server.js",
     "react": "react-scripts start",
     "build": "react-scripts build",
@@ -50,6 +54,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "concurrently": "^8.2.1",
+    "electron": "^27.0.3",
     "html-loader": "^4.2.0"
   }
 }
