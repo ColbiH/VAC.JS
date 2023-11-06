@@ -38,6 +38,9 @@ function Template(data) {
             let questionType = data[i].question_type;
             let questionText = extractContentBetweenPTags(data[i].question_text);
             let answerOptions = data[i].answers.map(answer => answer.text);
+            const placeholderRegex = /\[\w+\]/g;
+            questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
+
             if (questionType === "multiple_choice_question") {
                 let multiChoiceQuestion = "\\question " + questionText + " \n" +
                     "\\begin{choices} \n"
@@ -88,6 +91,21 @@ function Template(data) {
             if(questionType === "text_only_question"){
                 let textOnlyQuestion = "\\question " + questionText + "\n"
                 LaTeXTemplate += textOnlyQuestion;
+            }
+            if (questionType === "matching_question") {
+                let leftAnswer = data[i].answers.map(answer => answer.left);
+                let rightAnswer = data[i].answers.map(answer => answer.right);
+                let matchingQuestion = "\\question " + questionText + " \n";
+
+                if (Array.isArray(answerOptions)) {
+                    for (let j = 0; j < answerOptions.length; j++) {
+                        matchingQuestion += "\\item[" + leftAnswer[j] + "] \\hspace{5cm} " + rightAnswer[j] + "\n";
+                    }
+                }
+
+                matchingQuestion += "\\vspace{1cm}\n";
+
+                LaTeXTemplate += matchingQuestion;
             }
         }
     }
