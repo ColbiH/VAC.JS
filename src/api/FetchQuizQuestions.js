@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
-import LaTeXBuilder from "../components/LaTeXBuilder";
+import LaTeXBuilder from "../components/Printing/LaTeXBuilder";
 
 function FetchQuizQuestions({login, course, quiz}) {
     const [data, setData] = useState([]);
@@ -11,7 +11,7 @@ function FetchQuizQuestions({login, course, quiz}) {
         const options = {
             method: 'GET',
             headers: {
-                'x-cors-api-key': 'temp_578646f3ba3de0a66ef52336a65f811a',
+                'x-cors-api-key': 'temp_ce104861724fc67b306eacafd84230a4',
                 Authorization: 'Bearer ' + login.api_key //API Key needs to be here to use this portion of code.
             }
         };
