@@ -22,6 +22,7 @@ function AssignmentsDisplay() {
 
     return (
         <>
+            yep
             <div style={{ paddingRight: 200 }}>
                 <AssignmentsTreeBrowser login={location.state.login} classes={location.state.classes}/>
             </div>

@@ -57,7 +57,7 @@ function FetchClassesAndQuizzes() {
         if (firstClass.quizzes) {
             return (
                 <div>
-                    {navigate('/gsam', {state: {login: location.state.login, classes: classes }})}
+                    {navigate('/sam', {state: {login: location.state.login, classes: classes }})}
                 </div>
             );
         } else {

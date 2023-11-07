@@ -1,6 +1,6 @@
 const { app, BrowserWindow } = require('electron');
-
 let mainWindow;
+
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -11,7 +11,7 @@ function createWindow() {
         },
     });
 
-    mainWindow.loadURL('http://localhost:3001');
+    mainWindow.loadURL('http://localhost:3000');
 
     mainWindow.webContents.openDevTools();
 

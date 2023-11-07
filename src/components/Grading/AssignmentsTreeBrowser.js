@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import {TreeBrowser} from "@instructure/ui";
 import "./AssignmentsDisplay.css"
-import FetchQuizQuestions from "../../api/FetchQuizQuestions";
 import Sidebar from "../Sidebar";
+import FetchAssignmentSubmissions from "../../api/FetchAssignmentSubmissions";
 
 function transformDataForTreeBrowser(classes) {
     const collections = {
@@ -88,6 +88,7 @@ function AssignmentsTreeBrowser({login, classes}) {
 
     return (
         <>
+            yep12
             <div>
                 <Sidebar/>
             </div>
@@ -100,7 +101,7 @@ function AssignmentsTreeBrowser({login, classes}) {
                 onItemClick={handleItemClick}
             />
             {clickedItem !== null && (
-                <FetchQuizQuestions login={login} course={transformDataForItems(classes)[clickedItem.id].course_id} quiz={clickedItem.id} />
+                <FetchAssignmentSubmissions login={login} course={transformDataForItems(classes)[clickedItem.id].course_id} quiz={clickedItem.id} />
             )}
         </>
     );

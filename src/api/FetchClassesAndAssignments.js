@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
-import GSam from '../components/Grading/GSam';
 import {useLocation, useNavigate} from "react-router-dom";
 import {Spinner} from "@instructure/ui";
 
@@ -60,7 +59,7 @@ function FetchClassesAndAssignments({login}) {
         if (firstClass.quizzes) {
             return (
                 <div>
-                    {navigate('/gsam', {state: {login: location.state.login, classes: classes }})}
+                    {navigate('/assignmentsam', {state: {login: location.state.login, classes: classes }})}
                 </div>
             );
         } else {

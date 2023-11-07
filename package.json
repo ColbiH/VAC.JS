@@ -23,7 +23,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run electron\"",
+    "start": "concurrently \"npm run server\" \"npm run react\" \"npm run electron\"",
     "electron": "electron .",
     "react-start": "react-scripts start",
     "electron-build": "electron-builder",
@@ -55,6 +55,8 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "concurrently": "^8.2.1",
     "electron": "^27.0.3",
+    "electron-reload": "^2.0.0-alpha.1",
+    "electron-reloader": "^1.2.3",
     "html-loader": "^4.2.0"
   }
 }
