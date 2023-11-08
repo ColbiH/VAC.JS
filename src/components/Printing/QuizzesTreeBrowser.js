@@ -88,14 +88,16 @@ function QuizzesTreeBrowser({login, classes}) {
             <div>
                 <Sidebar/>
             </div>
-            <TreeBrowser
-                size= "large"
-                collections={transformDataForTreeBrowser(classes)}
-                items={transformDataForItems(classes)}
-                defaultExpanded={[1]}
-                rootId={1}
-                onItemClick={handleItemClick}
-            />
+            <div className="quizzes-tree">
+                <TreeBrowser
+                    size= "large"
+                    collections={transformDataForTreeBrowser(classes)}
+                    items={transformDataForItems(classes)}
+                    defaultExpanded={[1]}
+                    rootId={1}
+                    onItemClick={handleItemClick}
+                />
+            </div>
             {clickedItem !== null && (
                 <FetchQuizQuestions login={login} course={transformDataForItems(classes)[clickedItem.id].course_id} quiz={clickedItem.id} />
             )}

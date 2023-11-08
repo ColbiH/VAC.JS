@@ -12,7 +12,7 @@ function Sidebar() {
     const location = useLocation();
 
     return (
-        <div style={{height: '35rem'}}>
+        <div style={{height: '100vh'}}>
             <SideNavBar
                 label="Main navigation"
                 toggleLabel={{

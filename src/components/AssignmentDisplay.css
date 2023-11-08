@@ -1,0 +1,26 @@
+.assignment-tree {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.assignment-table {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+}
+
+.download-button {
+    position: absolute;
+    top: 80px;
+    right: 300px;
+}
+
+.grade-button {
+    position: absolute;
+    top: 80px;
+    right: 100px;
+}

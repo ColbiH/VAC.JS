@@ -1,0 +1,13 @@
+.quiz-pdf {
+    position: fixed;
+    top: 40%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+  }
+    
+  .code-grader {
+    position: fixed;
+    top: 40%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+  }
