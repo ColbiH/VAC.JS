@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
-import LaTeXBuilder from "../components/Printing/LaTeXBuilder";
+import CodeGrader from "../components/Grading/CodeGrader";
 
-function FetchQuizQuestions({login, course, quiz}) {
+function FetchAssignmentSubmissions({login, course, quiz}) {
     const [data, setData] = useState([]);
-    const url = 'https://proxy.cors.sh/https://' + login.canvas_url + '/api/v1/courses/' + course + '/quizzes/' + quiz + '/questions';
+    const url = 'https://proxy.cors.sh/https://' + login.canvas_url + '/api/v1/courses/' + course + '/assignments/' + quiz + '/submissions';
 
 
     useEffect(() => {
@@ -27,9 +27,9 @@ function FetchQuizQuestions({login, course, quiz}) {
 
     return (
         <div>
-            <LaTeXBuilder data={data}/>
+            <CodeGrader data={data}/>
         </div>
     );
 }
 
-export default FetchQuizQuestions;
+export default FetchAssignmentSubmissions;

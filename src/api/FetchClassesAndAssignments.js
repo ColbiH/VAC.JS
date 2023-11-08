@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from "react-router-dom";
 import {Spinner} from "@instructure/ui";
 
-function FetchClassesAndQuizzes() {
+function FetchClassesAndAssignments({login}) {
     const [classes, setClasses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
@@ -13,9 +13,9 @@ function FetchClassesAndQuizzes() {
     useEffect(() => {
         const options = {
             method: 'GET',
-                headers: {
-                    'x-cors-api-key': 'temp_ce104861724fc67b306eacafd84230a4',
-                    Authorization: 'Bearer ' + location.state.login.api_key,
+            headers: {
+                'x-cors-api-key': 'temp_578646f3ba3de0a66ef52336a65f811a',
+                Authorization: 'Bearer ' + location.state.login.api_key,
             },
         };
 
@@ -24,9 +24,11 @@ function FetchClassesAndQuizzes() {
                 setClasses(classData);
 
                 const classPromises = classData.map((classInfo) => {
-                    return FetchCanvas(`https://proxy.cors.sh/https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/quizzes`, options)
+                    return FetchCanvas(`https://proxy.cors.sh/https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/assignments`, options)
                         .then((quizData) => {
-                            classInfo.quizzes = quizData;
+                            if (Array.isArray(quizData)) {
+                                classInfo.quizzes = quizData.filter((quiz) =>  quiz.submission_types.includes('online_upload'));
+                            }
                             return classInfo;
                         })
                         .catch((error) => {
@@ -57,7 +59,7 @@ function FetchClassesAndQuizzes() {
         if (firstClass.quizzes) {
             return (
                 <div>
-                    {navigate('/sam', {state: {login: location.state.login, classes: classes }})}
+                    {navigate('/assignmentsam', {state: {login: location.state.login, classes: classes }})}
                 </div>
             );
         } else {
@@ -68,4 +70,4 @@ function FetchClassesAndQuizzes() {
     return <p>No classes available for this teacher.</p>;
 }
 
-export default FetchClassesAndQuizzes;
+export default FetchClassesAndAssignments;

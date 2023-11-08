@@ -4,14 +4,9 @@ import {
     IconPrinterLine,
     SideNavBar
 } from "@instructure/ui";
-import React, {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 
 function Sidebar() {
-    const [currentPage, setCurrentPage] = useState(null);
-    const changePage = (page) => {
-        setCurrentPage(page);
-    };
     //const { state: { login } = {} } = useLocation();
     const navigate = useNavigate();
     const location = useLocation();
@@ -32,14 +27,13 @@ function Sidebar() {
                 />
                 <SideNavBar.Item
                     icon={<IconPrinterLine/>}
-                    label="Pdf printer"
+                    label="PDF Printer"
                     onClick={() => navigate('/fetchclassesquizzes', {state: {login: location.state.login, classes : location.state.classes }})}
                 />
                 <SideNavBar.Item
                     icon={<IconGradebookLine/>}
                     label="Code Grader"
-                    onClick={() => {changePage(null)}}
-                    // onClick={() => navigate('/printvsgrade', {state: {login: location.state.login, classes: location.state.classes }})}
+                    onClick={() => navigate('/fetchclassesassignments', {state: {login: location.state.login, classes: location.state.classes }})}
                 />
             </SideNavBar>
         </div>

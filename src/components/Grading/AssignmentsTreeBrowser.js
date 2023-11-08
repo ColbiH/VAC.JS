@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import {TreeBrowser} from "@instructure/ui";
-import "./QuizzesDisplay.css";
-import FetchQuizQuestions from "../api/FetchQuizQuestions";
-import Sidebar from "./Sidebar";
+import "./AssignmentsDisplay.css"
+import Sidebar from "../Sidebar";
+import FetchAssignmentSubmissions from "../../api/FetchAssignmentSubmissions";
 
 function transformDataForTreeBrowser(classes) {
     const collections = {
@@ -34,6 +34,8 @@ function transformDataForTreeBrowser(classes) {
             }
         }
     }
+
+
     return collections;
 }
 
@@ -64,7 +66,7 @@ function transformDataForItems(classes) {
                     const quiz = classInfo.quizzes[j];
                     collections[1].items[quiz.id] = {
                         id: quiz.id,
-                        name: quiz.title,
+                        name: quiz.name,
                         course_id: classInfo.id,
                         collections: [],
                         items: {},
@@ -73,10 +75,11 @@ function transformDataForItems(classes) {
             }
         }
     }
+    //console.log(collections);
     return collections[1].items;
 }
 
-function QuizzesTreeBrowser({login, classes}) {
+function AssignmentsTreeBrowser({login, classes}) {
     const [clickedItem, setClickedItem] = useState(null);
 
     const handleItemClick = (item) => {
@@ -85,24 +88,23 @@ function QuizzesTreeBrowser({login, classes}) {
 
     return (
         <>
+            yep12
             <div>
                 <Sidebar/>
             </div>
-            <div className="quizzes-tree">
-                <TreeBrowser
-                    size= "large"
-                    collections={transformDataForTreeBrowser(classes)}
-                    items={transformDataForItems(classes)}
-                    defaultExpanded={[1]}
-                    rootId={1}
-                    onItemClick={handleItemClick}
-                />
-            </div>
+            <TreeBrowser
+                size="large"
+                collections={transformDataForTreeBrowser(classes)}
+                items={transformDataForItems(classes)}
+                defaultExpanded={[1]}
+                rootId={1}
+                onItemClick={handleItemClick}
+            />
             {clickedItem !== null && (
-                <FetchQuizQuestions login={login} course={transformDataForItems(classes)[clickedItem.id].course_id} quiz={clickedItem.id} />
+                <FetchAssignmentSubmissions login={login} course={transformDataForItems(classes)[clickedItem.id].course_id} quiz={clickedItem.id} />
             )}
         </>
     );
 }
 
-export default QuizzesTreeBrowser;
+export default AssignmentsTreeBrowser;
