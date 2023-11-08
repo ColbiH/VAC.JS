@@ -9,6 +9,8 @@ import Intro from "./Intro";
 import PrintVsGrade from "./PrintVsGrade";
 import './App.css';
 import FetchClassesAndQuizzes from "../api/FetchClassesAndQuizzes";
+import AssignmentTreeBrowser from "./AssignmentTreeBrowser";
+import AssignmentDisplay from "./AssignmentDisplay";
 
 function App() {
     return (
@@ -22,6 +24,8 @@ function App() {
                 <Route path = "/login" element = {<Login />}/>
                 <Route path = "/printvsgrade" element = {<PrintVsGrade />} />
                 <Route path = "/fetchclassesquizzes" element = {<FetchClassesAndQuizzes />} />
+                <Route path = "/fetchclassassignments" element = {<AssignmentTreeBrowser />} />
+                <Route path = "/assignmenttable" element = {<AssignmentDisplay />} />
             </Routes>
         </div>
     );

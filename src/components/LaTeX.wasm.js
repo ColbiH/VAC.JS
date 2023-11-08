@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { Button, InstUISettingsProvider, canvas } from '@instructure/ui';
+import "./QuizzesDisplay.css";
 
 function App({ template }) {
     const iframeRef = useRef(null);
@@ -25,7 +27,13 @@ function App({ template }) {
                 frameBorder="0"
                 scrolling="no"
             ></iframe>
-            <button onClick={compileLatexInIframe}>Compile LaTeX</button>
+            <div className="download-button">
+                {/*<button onClick={compileLatexInIframe}>Compile LaTeX</button>*/}
+
+                <InstUISettingsProvider theme={canvas}>
+                    <Button onClick={compileLatexInIframe} color="danger" margin="small">Download</Button>
+                </InstUISettingsProvider>
+            </div>
         </div>
     );
 }
