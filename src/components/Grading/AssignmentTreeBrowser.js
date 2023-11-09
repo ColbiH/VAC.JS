@@ -40,19 +40,7 @@ function AssignmentTreeBrowser({login, classes}) {
                         /*1: { id: 1, name: "Exercise 1", descriptor: <CondensedButton onClick={() => navigate("/assignmenttable")}> View Assignment</CondensedButton>},
                         2: { id: 2, name: "Exercise 2", descriptor: <CondensedButton onClick={() => navigate("/assignmenttable")}>View Assignment</CondensedButton>},
                         3: { id: 3, name: "Project 1"},//, descriptor: <CondensedButton onClick={() => navigate("/assignmenttable")}>View Assignment</CondensedButton>}, */
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                        1: { id: 1, name: <CondensedButton onClick={() => navigate("/assignmenttable")}> Exercise 1</CondensedButton>},
-=======
                         1: { id: 1, name: <CondensedButton onClick={() => navigate("/assignmenttable")}>Exercise 1</CondensedButton>},
->>>>>>> Stashed changes
-=======
-                        1: { id: 1, name: <CondensedButton onClick={() => navigate("/assignmenttable")}>Exercise 1</CondensedButton>},
->>>>>>> Stashed changes
-=======
-                        1: { id: 1, name: <CondensedButton onClick={() => navigate("/assignmenttable")}>Exercise 1</CondensedButton>},
->>>>>>> Stashed changes
                         2: { id: 2, name: <CondensedButton onClick={() => navigate("/assignmenttable")}>Exercise 2</CondensedButton>},
                         3: { id: 3, name: <CondensedButton onClick={() => navigate("/assignmenttable")}>Project 1</CondensedButton>},
                       }}

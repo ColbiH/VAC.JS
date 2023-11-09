@@ -11,52 +11,19 @@ function AssignmentDisplay({login, classes}) {
     };
 
     //not sure if there should be a condition here to check the role of each person (student/teacher)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    //Table pulls only student info
-
-    //need toggle button and need to find way to pull in assignment name from previous page
-=======
     //Table must only pull student info
 
     //need to find way to pull in assignment name from previous page
->>>>>>> Stashed changes
-=======
-    //Table must only pull student info
-
-    //need to find way to pull in assignment name from previous page
->>>>>>> Stashed changes
-=======
-    //Table must only pull student info
-
-    //need to find way to pull in assignment name from previous page
->>>>>>> Stashed changes
     return (
         <>
             <div>
                 <Sidebar/>
             </div>
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
             <div className="assignment-name">
                 <Text color="primary" size="x-large" weight="bold">Assignment name here</Text>
             </div>
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
             <div className="download-button">
                 <Button color="secondary" margin="small">Download All  <IconDownloadLine/></Button>
             </div>
@@ -65,19 +32,7 @@ function AssignmentDisplay({login, classes}) {
                 <Button color="primary" margin="small">Grade All  <IconGradebookExportLine/></Button>
             </div>
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-            <div>
-=======
             <div className="toggle">
->>>>>>> Stashed changes
-=======
-            <div className="toggle">
->>>>>>> Stashed changes
-=======
-            <div className="toggle">
->>>>>>> Stashed changes
                 <Checkbox label="Publish grades" value="medium" variant="toggle" />
             </div>
 
