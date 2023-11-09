@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {Button, InstUISettingsProvider, TextInput} from "@instructure/ui";
-import './Login.css'; // Import a CSS file for styling
+import './Login.css';
 import {useNavigate} from "react-router-dom";
 
 function Login() {

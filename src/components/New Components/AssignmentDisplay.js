@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {Button, Metric, Table, Link, Text, Pill, IconDownloadLine, IconGradebookExportLine, Options} from "@instructure/ui";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar";
 import "./AssignmentDisplay.css";
 
 function AssignmentDisplay({login, classes}) {

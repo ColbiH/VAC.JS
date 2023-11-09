@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import {TreeBrowser, CondensedButton} from "@instructure/ui";
 import "./AssignmentDisplay.css";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar";
 
 
 function AssignmentTreeBrowser({login, classes}) {

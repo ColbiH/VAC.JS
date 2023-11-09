@@ -7,9 +7,9 @@ import FrontEnd from "./legacy/FrontEnd";
 import Intro from "./components/Intro";
 import PrintVsGrade from "./components/PrintVsGrade";
 import './App.css';
-import FetchClassesAndQuizzes from "../api/FetchClassesAndQuizzes";
-import AssignmentTreeBrowser from "./AssignmentTreeBrowser";
-import AssignmentDisplay from "./AssignmentDisplay";
+import FetchClassesAndQuizzes from "./api/FetchClassesAndQuizzes";
+import FetchClassesAndAssignments from "./api/FetchClassesAndAssignments";
+import AssignmentsDisplay from "./components/Grading/AssignmentsDisplay";
 
 function App() {
     return (
@@ -24,12 +24,7 @@ function App() {
                 <Route path = "/login" element = {<Login />}/>
                 <Route path = "/printvsgrade" element = {<PrintVsGrade />} />
                 <Route path = "/fetchclassesquizzes" element = {<FetchClassesAndQuizzes />} />
-<<<<<<< HEAD:src/components/App.js
-                <Route path = "/fetchclassassignments" element = {<AssignmentTreeBrowser />} />
-                <Route path = "/assignmenttable" element = {<AssignmentDisplay />} />
-=======
                 <Route path = "/fetchclassesassignments" element = {<FetchClassesAndAssignments />} />
->>>>>>> master:src/App.js
             </Routes>
         </div>
     );
