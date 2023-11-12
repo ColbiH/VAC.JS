@@ -31,7 +31,7 @@ function PrintVsGrade() {
                         <Button
                             size = "large"
                             margin = "small"
-                            onClick={() => navigate('/fetchclassassignments', {state: {login: location.state.login, classes : location.state.classes }})}
+                            onClick={() => navigate('/fetchassignments', {state: {login: location.state.login, classes : location.state.classes }})}
                             renderIcon={IconGradebookLine}></Button>
                     </Tooltip>
                 </div>
