@@ -11,16 +11,15 @@ import FetchClassesAndAssignments from "./api/FetchClassesAndAssignments";
 //import AssignmentsDisplay from "./components/Grading/AssignmentsDisplay";
 import AssignmentTreeBrowser from "./components/Grading/AssignmentTreeBrowser";
 import AssignmentDisplay from "./components/Grading/AssignmentDisplay";
+import QuizzesDisplay from "./components/Printing/QuizzesDisplay";
 
 function App() {
     return (
         <div className="App">
             <Routes>
                 <Route path = "/" element = {<Intro />} />
-                {/*
-                <Route path = "/sam" element = {<AssignmentsDisplay/>} />
-                <Route path = "/assignmentsam" element = {<AssignmentsDisplay/>} />
-                */}
+                <Route path = "/sam" element = {<QuizzesDisplay/>} />
+                {/*<Route path = "/assignmentsam" element = {<AssignmentsDisplay/>} />*/}
                 <Route path = "/jenny" element = {<Jenny />} />
                 <Route path = "/valentina" element = {<FrontEnd />} />
                 <Route path = "/backend" element = {<BackEnd />} />
