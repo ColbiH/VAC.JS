@@ -1,13 +1,15 @@
-const { app, BrowserWindow } = require('electron');
-let mainWindow;
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
 
+let mainWindow;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
-            nodeIntegration: true,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
         },
     });
 
@@ -21,6 +23,20 @@ function createWindow() {
 }
 
 app.on('ready', createWindow);
+
+ipcMain.handle('fetch-canvas', async (event, { url, options }) => {
+    try {
+        console.log(url);
+        console.log(options);
+        const response = await fetch(url, options);
+        console.log(response);
+        return await response.json();
+    } catch (error) {
+        console.error('Fetch error:', error);
+        return { error: error.message };
+    }
+});
+
 
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit();

@@ -8,14 +8,13 @@ function FetchClassesAndQuizzes() {
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const navigate = useNavigate();
-    const url = 'https://proxy.cors.sh/https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher';
+    const url = 'https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher';
 
     useEffect(() => {
         const options = {
             method: 'GET',
-                headers: {
-                    'x-cors-api-key': 'temp_ce104861724fc67b306eacafd84230a4',
-                    Authorization: 'Bearer ' + location.state.login.api_key,
+            headers: {
+                Authorization: 'Bearer ' + location.state.login.api_key,
             },
         };
 
@@ -24,7 +23,7 @@ function FetchClassesAndQuizzes() {
                 setClasses(classData);
 
                 const classPromises = classData.map((classInfo) => {
-                    return FetchCanvas(`https://proxy.cors.sh/https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/quizzes`, options)
+                    return FetchCanvas(`https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/quizzes`, options)
                         .then((quizData) => {
                             classInfo.quizzes = quizData;
                             return classInfo;
