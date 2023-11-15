@@ -13,21 +13,19 @@ function extractContentBetweenPTags(inputString) {
     }
 }
 
-function shuffle(array) {
+/*function shuffle(array) {
     let currentIndex = array.length, randomIndex;
 
-    // While there remain elements to shuffle...
     while (currentIndex !== 0) {
         // Pick a remaining element...
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
 
-        // And swap it with the current element.
         [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
 
     return array;
-}
+} */
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -139,27 +137,21 @@ function Template(data) {
             if (questionType === "calculated_question") {
                 let calculatedQuestion = "\\question ";
 
-                // Extracting information from the calculated question
-                let formulas = data[i].formulas;
+                //let formulas = data[i].formulas;
                 let answers = data[i].answers;
 
-                // Shuffle the answers randomly
                 const shuffledAnswers = shuffleArray([...answers]);
 
-                // Randomly select a value of a from the shuffled answers
                 const randomAValue = shuffledAnswers[0].variables.find((variable) => variable.name === "a").value;
 
-                // Replace [a] in the question with the actual value of a
                 const questionWithA = questionText.replace(/\[a\]/g, randomAValue);
                 calculatedQuestion += questionWithA + " \n";
 
                 calculatedQuestion += "\\begin{choices}\n";
 
-                // Loop through the shuffled answers and add them to the LaTeXTemplate
                 for (let i = 0; i < shuffledAnswers.length; i++) {
                     const answer = shuffledAnswers[i];
 
-                    // Append the modified question with the corresponding answer
                     calculatedQuestion += `\\choice ${answer.answer} \\\\\n`;
                 }
 
