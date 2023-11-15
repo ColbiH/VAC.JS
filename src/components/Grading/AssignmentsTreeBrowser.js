@@ -88,7 +88,6 @@ function AssignmentsTreeBrowser({login, classes}) {
 
     return (
         <>
-            yep12
             <div>
                 <Sidebar/>
             </div>
