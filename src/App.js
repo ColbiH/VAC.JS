@@ -10,21 +10,33 @@ import './App.css';
 import FetchClassesAndQuizzes from "./api/FetchClassesAndQuizzes";
 import FetchClassesAndAssignments from "./api/FetchClassesAndAssignments";
 import AssignmentsDisplay from "./components/Grading/AssignmentsDisplay";
+import QuizzesDisplay from "./components/Printing/QuizzesDisplay";
 
 function App() {
     return (
         <div className="App">
             <Routes>
+                {/* Origin/Development Page */}
                 <Route path = "/" element = {<Intro />} />
-                <Route path = "/sam" element = {<AssignmentsDisplay/>} />
+
+                {/* Login Page */}
+                <Route path = "/login" element = {<Login />}/>
+
+                {/* Program Selection Page */}
+                <Route path = "/printvsgrade" element = {<PrintVsGrade />} />
+
+                {/* API Call followed by PDF Page */}
+                <Route path = "/fetchclassesquizzes" element = {<FetchClassesAndQuizzes />} />
+                <Route path = "/sam" element = {<QuizzesDisplay/>} />
+
+                {/* API Call followed by Grading Page */}
+                <Route path = "/fetchclassesassignments" element = {<FetchClassesAndAssignments />} />
                 <Route path = "/assignmentsam" element = {<AssignmentsDisplay/>} />
+
+                {/* Legacy Pages Pending Deletion */}
                 <Route path = "/jenny" element = {<Jenny />} />
                 <Route path = "/valentina" element = {<FrontEnd />} />
                 <Route path = "/backend" element = {<BackEnd />} />
-                <Route path = "/login" element = {<Login />}/>
-                <Route path = "/printvsgrade" element = {<PrintVsGrade />} />
-                <Route path = "/fetchclassesquizzes" element = {<FetchClassesAndQuizzes />} />
-                <Route path = "/fetchclassesassignments" element = {<FetchClassesAndAssignments />} />
             </Routes>
         </div>
     );

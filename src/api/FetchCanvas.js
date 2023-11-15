@@ -1,11 +1,8 @@
 export async function FetchCanvas(url, options) {
     try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        return data;
+        const response = await window.api.FetchAPI(url, options)
+        console.log(response);
+        return await response;
     } catch (error) {
         throw error;
     }
