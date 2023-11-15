@@ -10,13 +10,14 @@ import './App.css';
 import FetchClassesAndQuizzes from "./api/FetchClassesAndQuizzes";
 import FetchClassesAndAssignments from "./api/FetchClassesAndAssignments";
 import AssignmentsDisplay from "./components/Grading/AssignmentsDisplay";
+import QuizzesDisplay from "./components/Printing/QuizzesDisplay";
 
 function App() {
     return (
         <div className="App">
             <Routes>
                 <Route path = "/" element = {<Intro />} />
-                <Route path = "/sam" element = {<AssignmentsDisplay/>} />
+                <Route path = "/sam" element = {<QuizzesDisplay/>} />
                 <Route path = "/assignmentsam" element = {<AssignmentsDisplay/>} />
                 <Route path = "/jenny" element = {<Jenny />} />
                 <Route path = "/valentina" element = {<FrontEnd />} />
