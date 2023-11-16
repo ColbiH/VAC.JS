@@ -8,13 +8,12 @@ function FetchClassesAndAssignments({login}) {
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const navigate = useNavigate();
-    const url = 'https://proxy.cors.sh/https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher';
+    const url = 'https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher';
 
     useEffect(() => {
         const options = {
             method: 'GET',
             headers: {
-                'x-cors-api-key': 'temp_578646f3ba3de0a66ef52336a65f811a',
                 Authorization: 'Bearer ' + location.state.login.api_key,
             },
         };
@@ -24,7 +23,7 @@ function FetchClassesAndAssignments({login}) {
                 setClasses(classData);
 
                 const classPromises = classData.map((classInfo) => {
-                    return FetchCanvas(`https://proxy.cors.sh/https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/assignments`, options)
+                    return FetchCanvas(`https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/assignments`, options)
                         .then((quizData) => {
                             if (Array.isArray(quizData)) {
                                 classInfo.quizzes = quizData.filter((quiz) =>  quiz.submission_types.includes('online_upload'));

@@ -13,8 +13,6 @@ function PrintVsGrade() {
             <div>
                 <Sidebar/>
             </div>
-            {/*<p>API Key: {location.state.login.api_key}</p>*/}
-            {/*<p>URL: {location.state.login.canvas_url}</p>*/}
             {<InstUISettingsProvider theme={canvas}>
                 <div className="quiz-pdf">
                     <Tooltip color="primary-inverse" renderTip="Quizzes" placement="start" offsetX="5px">
@@ -31,7 +29,7 @@ function PrintVsGrade() {
                         <Button
                             size = "large"
                             margin = "small"
-                            onClick={() => navigate('/fetchassignments', {state: {login: location.state.login, classes : location.state.classes }})}
+                            onClick={() => navigate('/fetchclassesassignments', {state: {login: location.state.login, classes : location.state.classes }})}
                             renderIcon={IconGradebookLine}></Button>
                     </Tooltip>
                 </div>

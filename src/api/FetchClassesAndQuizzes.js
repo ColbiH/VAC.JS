@@ -1,71 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
-import {useLocation, useNavigate} from 'react-router-dom';
-import {Spinner} from "@instructure/ui";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Spinner } from "@instructure/ui";
 
 function FetchClassesAndQuizzes() {
     const [classes, setClasses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const navigate = useNavigate();
-    const url = 'https://proxy.cors.sh/https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher';
+    const url = 'https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher';
 
     useEffect(() => {
-        const options = {
-            method: 'GET',
-                headers: {
-                    'x-cors-api-key': 'temp_ce104861724fc67b306eacafd84230a4',
-                    Authorization: 'Bearer ' + location.state.login.api_key,
-            },
-        };
+        const fetchData = async () => {
+            try {
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        Authorization: 'Bearer ' + location.state.login.api_key,
+                    },
+                };
 
-        FetchCanvas(url, options)
-            .then((classData) => {
-                setClasses(classData);
+                const classData = await FetchCanvas(url, options);
 
-                const classPromises = classData.map((classInfo) => {
-                    return FetchCanvas(`https://proxy.cors.sh/https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/quizzes`, options)
-                        .then((quizData) => {
-                            classInfo.quizzes = quizData;
-                            return classInfo;
-                        })
-                        .catch((error) => {
-                            console.error(`Error fetching quizzes for class ${classInfo.id}:`, error);
-                            return classInfo;
-                        });
+                const classPromises = classData.map(async (classInfo) => {
+                    try {
+                        const quizData = await FetchCanvas(`https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/quizzes`, options);
+                        classInfo.quizzes = quizData;
+                        return classInfo;
+                    } catch (error) {
+                        console.error(`Error fetching quizzes for class ${classInfo.id}:`, error);
+                        return classInfo;
+                    }
                 });
 
-                return Promise.all(classPromises);
-            })
-            .then((classesWithQuizzes) => {
-                console.log(classesWithQuizzes);
-            })
-            .catch((error) => {
-                console.error('Error fetching class data:', error);
-            })
-            .finally(() => {
+                const classesWithQuizzes = await Promise.all(classPromises);
+
+                setClasses(classesWithQuizzes);
                 setIsLoading(false);
-            });
+
+                navigate('/sam', { state: { login: location.state.login, classes: classesWithQuizzes } });
+            } catch (error) {
+                console.error('Error fetching class data:', error);
+                setIsLoading(false);
+            }
+        };
+        fetchData();
     }, []);
 
     if (isLoading) {
         return <Spinner renderTitle="Loading" size="small" margin="0 0 0 medium" />;
     }
 
-    if (classes.length > 0) {
-        const firstClass = classes[0];
-        if (firstClass.quizzes) {
-            return (
-                <div>
-                    {navigate('/sam', {state: {login: location.state.login, classes: classes }})}
-                </div>
-            );
-        } else {
-            return <p>No quizzes available for the first class.</p>;
-        }
-    }
-
-    return <p>No classes available for this teacher.</p>;
+    return null;
 }
 
 export default FetchClassesAndQuizzes;

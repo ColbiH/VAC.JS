@@ -13,10 +13,33 @@ function extractContentBetweenPTags(inputString) {
     }
 }
 
+/*function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
+
+    while (currentIndex !== 0) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+} */
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+
 function Template(data) {
     let LaTeXTemplate = "\\documentclass[addpoints]{exam}\n" +
         "\\usepackage{comment}\n" +
         "\\usepackage{multicol}\n" +
+        "\\usepackage{amsmath}\n" +
         "\n" +
         "\\begin{document}\n" +
         "\n" +
@@ -38,8 +61,6 @@ function Template(data) {
             let questionType = data[i].question_type;
             let questionText = extractContentBetweenPTags(data[i].question_text);
             let answerOptions = data[i].answers.map(answer => answer.text);
-            const placeholderRegex = /\[\w+\]/g;
-            questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
 
             if (questionType === "multiple_choice_question") {
                 let multiChoiceQuestion = "\\question " + questionText + " \n" +
@@ -60,10 +81,14 @@ function Template(data) {
                 LaTeXTemplate += "\\end{choices}\\vspace{1cm}\n"
             }
             if (questionType === "short_answer_question") {
+                const placeholderRegex = /\[\w+\]/g;
+                questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
                 let shortAnswerQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += shortAnswerQuestion;
             }
             if(questionType === "fill_in_multiple_blanks_question"){
+                const placeholderRegex = /\[\w+\]/g;
+                questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
                 let multiBlankQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += multiBlankQuestion;
             }
@@ -77,6 +102,8 @@ function Template(data) {
                 LaTeXTemplate += "\\end{checkboxes}\\vspace{1cm}\n"
             }
             if(questionType === "multiple_dropdowns_question"){
+                const placeholderRegex = /\[\w+\]/g;
+                questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
                 let multiDropDownsQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += multiDropDownsQuestion;
             }
@@ -106,6 +133,31 @@ function Template(data) {
                 matchingQuestion += "\\vspace{1cm}\n";
 
                 LaTeXTemplate += matchingQuestion;
+            }
+            if (questionType === "calculated_question") {
+                let calculatedQuestion = "\\question ";
+
+                //let formulas = data[i].formulas;
+                let answers = data[i].answers;
+
+                const shuffledAnswers = shuffleArray([...answers]);
+
+                const randomAValue = shuffledAnswers[0].variables.find((variable) => variable.name === "a").value;
+
+                const questionWithA = questionText.replace(/\[a\]/g, randomAValue);
+                calculatedQuestion += questionWithA + " \n";
+
+                calculatedQuestion += "\\begin{choices}\n";
+
+                for (let i = 0; i < shuffledAnswers.length; i++) {
+                    const answer = shuffledAnswers[i];
+
+                    calculatedQuestion += `\\choice ${answer.answer} \\\\\n`;
+                }
+
+                calculatedQuestion += "\\end{choices}\n";
+
+                LaTeXTemplate += calculatedQuestion;
             }
         }
     }
