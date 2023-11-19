@@ -5,6 +5,7 @@ import {useLocation} from "react-router-dom";
 import Sidebar from "../Sidebar";
 import AssignmentsTreeBrowser from "./AssignmentsTreeBrowser";
 
+
 const modalStyle = {
     content: {
         top: "50%",
@@ -76,7 +77,7 @@ function AssignmentsDisplay() {
             <div className="assignment-table">
                 <Table
                     layout= 'auto'
-                    hover= 'false'
+                    hover= 'true'
                 >
                     <Table.Head>
                         <Table.Row>

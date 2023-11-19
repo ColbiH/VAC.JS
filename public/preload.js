@@ -10,16 +10,11 @@ contextBridge.exposeInMainWorld("api", {
         }
         },
     StartDownload: async (url) => {
-        return new Promise((resolve, reject) => {
-            ipcRenderer.send("download", { payload: { fileUrl: url } });
-
-            ipcRenderer.once("download-completed", (event, filePath) => {
-                resolve({ success: true, filePath });
-            });
-
-            ipcRenderer.once("download-error", (event, errorMessage) => {
-                reject({ success: false, error: errorMessage });
-            });
+        ipcRenderer.send("download", { payload: { fileUrl: url } });
+    },
+    ListenForGrade: (callback) => {
+        ipcRenderer.on('grade', (event, data) => {
+            callback(data.grade);
         });
     },
 });
