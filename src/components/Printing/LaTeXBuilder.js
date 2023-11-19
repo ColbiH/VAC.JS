@@ -12,20 +12,6 @@ function extractContentBetweenPTags(inputString) {
         return "No <p> tags found in the input string.";
     }
 }
-
-/*function shuffle(array) {
-    let currentIndex = array.length, randomIndex;
-
-    while (currentIndex !== 0) {
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-    }
-
-    return array;
-} */
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -34,13 +20,27 @@ function shuffleArray(array) {
     return array;
 }
 
+function extractAltTextFromImages(inputString) {
+    var tempElement = document.createElement('div');
+    tempElement.innerHTML = inputString;
+
+    var imgElements = tempElement.querySelectorAll('img');
+
+    var altTextArray = [];
+    imgElements.forEach((img) => {
+        var altText = img.getAttribute('alt');
+        altTextArray.push(altText);
+    });
+
+    return altTextArray;
+}
 
 function Template(data) {
     let LaTeXTemplate = "\\documentclass[addpoints]{exam}\n" +
         "\\usepackage{comment}\n" +
         "\\usepackage{multicol}\n" +
         "\\usepackage{amsmath}\n" +
-        "\n" +
+       // "\\usepackage{graphicx}" +"\n" +
         "\\begin{document}\n" +
         "\n" +
         "\\vspace{5mm}\n" +
@@ -61,6 +61,16 @@ function Template(data) {
             let questionType = data[i].question_type;
             let questionText = extractContentBetweenPTags(data[i].question_text);
             let answerOptions = data[i].answers.map(answer => answer.text);
+            let altTextArray = extractAltTextFromImages(data[i].question_text);
+
+            for (let j = 0; j < altTextArray.length; j++) {
+                LaTeXTemplate += `
+                \\begin{figure}[ht]
+                \\centering
+                \\caption{${altTextArray[j]}}  % Use alt text as the caption
+                \\end{figure}
+                `;
+            }
 
             if (questionType === "multiple_choice_question") {
                 let multiChoiceQuestion = "\\question " + questionText + " \n" +
@@ -152,12 +162,12 @@ function Template(data) {
                 for (let i = 0; i < shuffledAnswers.length; i++) {
                     const answer = shuffledAnswers[i];
 
-                    calculatedQuestion += `\\choice ${answer.answer} \\\\\n`;
+                    calculatedQuestion += `\\choice ${answer.answer} \n`;
                 }
 
                 calculatedQuestion += "\\end{choices}\n";
 
-                LaTeXTemplate += calculatedQuestion;
+                LaTeXTemplate += calculatedQuestion+ "\\vspace{1cm}\n";
             }
         }
     }
