@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LaTeXWasm from "./LaTeX.wasm";
+import {Checkbox, NumberInput} from "@instructure/ui";
 
 function extractContentBetweenPTags(inputString) {
     var tempElement = document.createElement('div');
@@ -35,7 +36,7 @@ function extractAltTextFromImages(inputString) {
     return altTextArray;
 }
 
-function Template(data) {
+function Template(data, essayVspace) {
     let LaTeXTemplate = "\\documentclass[addpoints]{exam}\n" +
         "\\usepackage{comment}\n" +
         "\\usepackage{multicol}\n" +
@@ -64,12 +65,10 @@ function Template(data) {
             let altTextArray = extractAltTextFromImages(data[i].question_text);
 
             for (let j = 0; j < altTextArray.length; j++) {
-                LaTeXTemplate += `
-                \\begin{figure}[ht]
+                LaTeXTemplate += `\\begin{figure}[ht]
                 \\centering
                 \\caption{${altTextArray[j]}}  % Use alt text as the caption
-                \\end{figure}
-                `;
+                \\end{figure}`
             }
 
             if (questionType === "multiple_choice_question") {
@@ -122,8 +121,9 @@ function Template(data) {
                 LaTeXTemplate += numQuestion;
             }
             if(questionType === "essay_question"){
-                let essayQuestion = "\\question " + questionText + "\\vspace{5cm}\n"
+                let essayQuestion = `\\question ${questionText} \\vspace{${essayVspace}cm}\n`;
                 LaTeXTemplate += essayQuestion;
+                console.log("Current essayVspace in Template:", essayVspace);
             }
             if(questionType === "text_only_question"){
                 let textOnlyQuestion = "\\question " + questionText + "\n"
@@ -181,13 +181,24 @@ function Template(data) {
 }
 
 function LaTeXBuilder({ data }) {
-    if (!data || data.length === 0) {
-        return <div>Loading...</div>;
-    }
+    const [essayVspace, setEssayVspace] = useState(10);
+
+    const handleNumberInputChange = (event) => {
+        setEssayVspace(event.target.value);
+        console.log("Updated essayVspace:", event.target.value);
+    };
 
     return (
         <div>
-            <LaTeXWasm template={Template(data)} />
+            <LaTeXWasm template={Template(data, essayVspace)} />
+            <NumberInput
+                renderLabel="How many lines would you like for free-response questions?"
+                showArrows={false}
+                placeholder={essayVspace.toString()}
+                onChange={handleNumberInputChange}
+            />
+            <br></br>
+            <Checkbox label={'Use alt-text for images'} value="medium" />
         </div>
     );
 }
