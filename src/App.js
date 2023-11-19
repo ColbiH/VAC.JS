@@ -11,6 +11,7 @@ import FetchClassesAndQuizzes from "./api/FetchClassesAndQuizzes";
 import FetchClassesAndAssignments from "./api/FetchClassesAndAssignments";
 import AssignmentsDisplay from "./components/Grading/AssignmentsDisplay";
 import QuizzesDisplay from "./components/Printing/QuizzesDisplay";
+import FetchAssignmentSubmissions from "./api/FetchAssignmentSubmissions";
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                 {/* API Call followed by Grading Page */}
                 <Route path = "/fetchclassesassignments" element = {<FetchClassesAndAssignments />} />
                 <Route path = "/assignmentsam" element = {<AssignmentsDisplay/>} />
+                <Route path = "/fetchsassignmentsubmissions" element = {<FetchAssignmentSubmissions />} />
 
                 {/* Legacy Pages Pending Deletion */}
                 <Route path = "/jenny" element = {<Jenny />} />

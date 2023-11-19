@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import {TreeBrowser} from "@instructure/ui";
+import { useNavigate } from 'react-router-dom';
 import "./AssignmentsDisplay.css"
 import Sidebar from "../Sidebar";
 import FetchAssignmentSubmissions from "../../api/FetchAssignmentSubmissions";
+
 
 function transformDataForTreeBrowser(classes) {
     const collections = {
@@ -79,16 +81,15 @@ function transformDataForItems(classes) {
     return collections[1].items;
 }
 
-function AssignmentsTreeBrowser({login, classes}) {
-    const [clickedItem, setClickedItem] = useState(null);
 
-    const handleItemClick = (item) => {
-        setClickedItem(item);
+function AssignmentsTreeBrowser({login, classes}) {
+    const navigate = useNavigate();
+    const handleItemClick = async (item) => {
+        navigate('/fetchsassignmentsubmissions', { state: { login: login, course: transformDataForItems(classes)[item.id].course_id, quiz: item.id } });
     };
 
     return (
         <>
-            yep12
             <div>
                 <Sidebar/>
             </div>
@@ -100,9 +101,6 @@ function AssignmentsTreeBrowser({login, classes}) {
                 rootId={1}
                 onItemClick={handleItemClick}
             />
-            {clickedItem !== null && (
-                <FetchAssignmentSubmissions login={login} course={transformDataForItems(classes)[clickedItem.id].course_id} quiz={clickedItem.id} />
-            )}
         </>
     );
 }
