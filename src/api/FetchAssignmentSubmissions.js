@@ -1,7 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
 import { useLocation } from 'react-router-dom';
-import { Link, Metric, Pill, Table, Text } from '@instructure/ui';
+import {
+    Button,
+    Checkbox,
+    IconDownloadLine,
+    IconGradebookExportLine,
+    Link,
+    Metric,
+    Pill,
+    Table,
+    Text
+} from '@instructure/ui';
+import Sidebar from "../components/Sidebar";
 
 const rows = [
     {
@@ -125,46 +136,68 @@ function FetchAssignmentSubmissions() {
 
 
     return (
-        <div className="assignment-table">
-            <Table
-                layout='auto'
-                hover='true'
-            >
-                <Table.Head>
-                    <Table.Row>
-                        {(headers || []).map(({ id, text, width, textAlign }) => (
-                            <Table.ColHeader
-                                key={id}
-                                id={id}
-                                width={width}
-                                //textAlign={textAlign}
-                            >
-                                {text}
-                            </Table.ColHeader>
-                        ))}
-                    </Table.Row>
-                </Table.Head>
-                <Table.Body>
-                    {rows.map((row) => (
-                        <Table.Row key={row.id}>
-                            {headers.map(({ id,}) => (
-                                <Table.Cell key={id}>
-                                    {id === 'Grade_Status' ? (
-                                        row[id] === null ? (
-                                            <Pill color="danger" margin="x-small">Not Graded</Pill>
-                                        ) : (
-                                            <Pill color="success" margin="x-small">Graded</Pill>
-                                        )
-                                    ) : (
-                                        row[id]
-                                    )}
-                                </Table.Cell>
+        <>
+            <div>
+                <Sidebar/>
+            </div>
+
+            <div className="assignment-name">
+                <Text color="primary" size="x-large" weight="bold">Assignment name here</Text>
+            </div>
+
+            <div className="download-button">
+                <Button color="secondary" margin="small">Download All  <IconDownloadLine/></Button>
+            </div>
+
+            <div className="grade-button">
+                <Button color="primary" margin="small">Grade All  <IconGradebookExportLine/></Button>
+            </div>
+
+            <div className="toggle">
+                <Checkbox label="Publish grades" value="medium" variant="toggle" />
+            </div>
+
+            <div className="assignment-table">
+                <Table
+                    layout='auto'
+                    hover='true'
+                >
+                    <Table.Head>
+                        <Table.Row>
+                            {(headers || []).map(({ id, text, width, textAlign }) => (
+                                <Table.ColHeader
+                                    key={id}
+                                    id={id}
+                                    width={width}
+                                    //textAlign={textAlign}
+                                >
+                                    {text}
+                                </Table.ColHeader>
                             ))}
                         </Table.Row>
-                    ))}
-                </Table.Body>
-            </Table>
-        </div>
+                    </Table.Head>
+                    <Table.Body>
+                        {rows.map((row) => (
+                            <Table.Row key={row.id}>
+                                {headers.map(({ id,}) => (
+                                    <Table.Cell key={id}>
+                                        {id === 'Grade_Status' ? (
+                                            row[id] === null ? (
+                                                <Pill color="danger" margin="x-small">Not Graded</Pill>
+                                            ) : (
+                                                <Pill color="success" margin="x-small">Graded</Pill>
+                                            )
+                                        ) : (
+                                            row[id]
+                                        )}
+                                    </Table.Cell>
+                                ))}
+                            </Table.Row>
+                        ))}
+                    </Table.Body>
+                </Table>
+            </div>
+        </>
     );
 }
 
