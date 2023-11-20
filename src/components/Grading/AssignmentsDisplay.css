@@ -6,8 +6,8 @@
 }
 
 .assignment-table {
-    position: fixed;
-    top: 50%;
+    position: absolute;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 75%;
@@ -35,4 +35,27 @@
     position: absolute;
     top: 50px;
     left: 170px;
+}
+
+.test-cases {
+    position: absolute;
+    top: 25%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+}
+
+.input {
+    position: absolute;
+    left: 90px;
+}
+
+.output {
+    position: absolute;
+    left: 360px;
+}
+
+.add-test {
+    position: absolute;
+    top: 60%;
+    left: 525px;
 }
