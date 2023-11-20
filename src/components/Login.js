@@ -29,7 +29,9 @@ function Login() {
                             placeholder="ufl.instructure.com"
                             onChange={(event, value) => setcanvas_Url(value)}
                         />
-                        <Button onClick={() => navigate("/printvsgrade", {state: {login: login }})}>Login</Button>
+                        <div className="login-btn">
+                            <Button onClick={() => navigate("/printvsgrade", {state: {login: login }})}>Login</Button>
+                        </div>
                     </div>
             </div>
         </InstUISettingsProvider>

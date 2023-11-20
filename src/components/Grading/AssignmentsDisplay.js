@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Button, Checkbox, Metric, Table, Link, Text, Pill, IconDownloadLine, IconGradebookExportLine, Options} from "@instructure/ui";
+import {Button, Checkbox, Metric, Table, Link, Text, TextInput, FormFieldGroup, Pill, IconDownloadLine, IconGradebookExportLine, IconPlusSolid} from "@instructure/ui";
 import "./AssignmentsDisplay.css"
 import {useLocation} from "react-router-dom";
 import Sidebar from "../Sidebar";
@@ -57,6 +57,33 @@ function AssignmentsDisplay() {
                 <Sidebar/>
             </div>
 
+            <div className="test-cases">
+                <FormFieldGroup
+                    description="Test Cases"
+                    colSpacing="medium"
+                    layout="columns"
+                    vAlign="top"
+                >
+                <div className="points">
+                    <TextInput renderLabel="Points" width="70px"/>
+                </div>
+                
+                <div className="input">
+                <TextInput renderLabel="Sample Input" width="250px"/>
+                </div>
+
+                <div className="output">
+                <TextInput renderLabel="Expected Output" width="150px"/>
+                </div>
+                </FormFieldGroup>
+
+                <div className="add-test">
+                    <Button> <IconPlusSolid/> </Button>
+                </div>
+
+            </div>
+
+            
             <div className="assignment-name">
                 <Text color="primary" size="x-large" weight="bold">Assignment name here</Text>
             </div>

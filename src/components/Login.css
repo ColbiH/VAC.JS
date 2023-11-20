@@ -17,6 +17,7 @@
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 300px;
+    height: 260px;
 }
 
 /* Style for the heading */
@@ -50,4 +51,11 @@
 
 .Button:hover {
     background-color: #005bb8;
+}
+
+.login-btn {
+    position: fixed;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
