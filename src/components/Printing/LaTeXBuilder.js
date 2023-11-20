@@ -42,7 +42,8 @@ function Template(data, essayVspace, courseName, quizName) {
         "\\usepackage{comment}\n" +
         "\\usepackage{multicol}\n" +
         "\\usepackage{amsmath}\n" +
-        // "\\usepackage{graphicx}" +"\n" +
+        "\\usepackage{graphicx}" +
+        //"\\graphicspath{./Images/}"  +
         "\\begin{document}\n" +
         "\n" +
         "\\vspace{5mm}\n" +
@@ -68,6 +69,7 @@ function Template(data, essayVspace, courseName, quizName) {
             for (let j = 0; j < altTextArray.length; j++) {
                 LaTeXTemplate += `\\begin{figure}[ht]
             \\centering
+            \\centerline{\\includegraphics[width=0.5\\linewidth]{troll.jpg}}
             \\caption{${altTextArray[j]}}  % Use alt text as the caption
             \\end{figure}`
             }
