@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import LaTeXWasm from "./LaTeX.wasm";
+//import { FetchQuizQuestions } from './FetchQuizQuestions';
 import {Checkbox, NumberInput} from "@instructure/ui";
 
 function extractContentBetweenPTags(inputString) {
@@ -29,19 +30,19 @@ function extractAltTextFromImages(inputString) {
 
     var altTextArray = [];
     imgElements.forEach((img) => {
-        var altText = img.getAttribute('alt');
-        altTextArray.push(altText);
+    var altText = img.getAttribute('alt');
+    altTextArray.push(altText);
     });
 
     return altTextArray;
 }
 
-function Template(data, essayVspace) {
+function Template(data, essayVspace, courseName, quizName) {
     let LaTeXTemplate = "\\documentclass[addpoints]{exam}\n" +
         "\\usepackage{comment}\n" +
         "\\usepackage{multicol}\n" +
         "\\usepackage{amsmath}\n" +
-       // "\\usepackage{graphicx}" +"\n" +
+        // "\\usepackage{graphicx}" +"\n" +
         "\\begin{document}\n" +
         "\n" +
         "\\vspace{5mm}\n" +
@@ -53,7 +54,7 @@ function Template(data, essayVspace) {
         "\\makebox[\\textwidth]{Date:\\hrulefill}\n" +
         "\\begin{center}\n" +
         "\\fbox{\\fbox{\\parbox{5.5in}{\\centering\n" +
-        "Course: Quiz Name}}}\n" +
+        courseName + ": " + quizName + "}}}\n" +
         "\\end{center}\n" +
         "\\begin{questions}\n"
 
@@ -66,9 +67,9 @@ function Template(data, essayVspace) {
 
             for (let j = 0; j < altTextArray.length; j++) {
                 LaTeXTemplate += `\\begin{figure}[ht]
-                \\centering
-                \\caption{${altTextArray[j]}}  % Use alt text as the caption
-                \\end{figure}`
+            \\centering
+            \\caption{${altTextArray[j]}}  % Use alt text as the caption
+            \\end{figure}`
             }
 
             if (questionType === "multiple_choice_question") {
@@ -95,7 +96,7 @@ function Template(data, essayVspace) {
                 let shortAnswerQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += shortAnswerQuestion;
             }
-            if(questionType === "fill_in_multiple_blanks_question"){
+            if (questionType === "fill_in_multiple_blanks_question") {
                 const placeholderRegex = /\[\w+\]/g;
                 questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
                 let multiBlankQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
@@ -110,22 +111,22 @@ function Template(data, essayVspace) {
                 }
                 LaTeXTemplate += "\\end{checkboxes}\\vspace{1cm}\n"
             }
-            if(questionType === "multiple_dropdowns_question"){
+            if (questionType === "multiple_dropdowns_question") {
                 const placeholderRegex = /\[\w+\]/g;
                 questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
                 let multiDropDownsQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += multiDropDownsQuestion;
             }
-            if(questionType === "numerical_question"){
+            if (questionType === "numerical_question") {
                 let numQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += numQuestion;
             }
-            if(questionType === "essay_question"){
+            if (questionType === "essay_question") {
                 let essayQuestion = `\\question ${questionText} \\vspace{${essayVspace}cm}\n`;
                 LaTeXTemplate += essayQuestion;
                 console.log("Current essayVspace in Template:", essayVspace);
             }
-            if(questionType === "text_only_question"){
+            if (questionType === "text_only_question") {
                 let textOnlyQuestion = "\\question " + questionText + "\n"
                 LaTeXTemplate += textOnlyQuestion;
             }
@@ -167,8 +168,9 @@ function Template(data, essayVspace) {
 
                 calculatedQuestion += "\\end{choices}\n";
 
-                LaTeXTemplate += calculatedQuestion+ "\\vspace{1cm}\n";
+                LaTeXTemplate += calculatedQuestion + "\\vspace{1cm}\n";
             }
+
         }
     }
 
@@ -180,27 +182,27 @@ function Template(data, essayVspace) {
     return LaTeXTemplate;
 }
 
-function LaTeXBuilder({ data }) {
-    const [essayVspace, setEssayVspace] = useState(10);
+    function LaTeXBuilder({ data, courseName, quizName }) {
+        console.log('Generated LaTeX:', data);
+        const [essayVspace, setEssayVspace] = useState(10);
 
-    const handleNumberInputChange = (event) => {
-        setEssayVspace(event.target.value);
-        console.log("Updated essayVspace:", event.target.value);
-    };
+        const handleNumberInputChange = (event) => {
+            setEssayVspace(event.target.value);
+            console.log("Updated essayVspace:", event.target.value);
+        };
 
-    return (
-        <div>
-            <LaTeXWasm template={Template(data, essayVspace)} />
-            <NumberInput
-                renderLabel="How many lines would you like for free-response questions?"
-                showArrows={false}
-                placeholder={essayVspace.toString()}
-                onChange={handleNumberInputChange}
-            />
-            <br></br>
-            <Checkbox label={'Use alt-text for images'} value="medium" />
-        </div>
-    );
-}
-
-export default LaTeXBuilder;
+        return (
+            <div>
+                <LaTeXWasm template={Template(data, essayVspace, courseName, quizName)}/>
+                <NumberInput
+                    renderLabel="How many lines would you like for free-response questions?"
+                    showArrows={false}
+                    placeholder={essayVspace.toString()}
+                    onChange={handleNumberInputChange}
+                />
+                <br></br>
+                <Checkbox label={'Use alt-text for images'} value="medium"/>
+            </div>
+        );
+    }
+    export default LaTeXBuilder;
