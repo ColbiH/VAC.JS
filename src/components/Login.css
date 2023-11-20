@@ -1,31 +1,40 @@
-/* Style for the login container */
+   /* Style for the login container */
 .login-container {
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #FFFFFF;
 }
 
 /* Style for the login form */
 .login-form {
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    padding: 20px;
+    font-family: 'LatoWeb', 'Lato', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    background-color: #F5F5F5;
+    border: 3px solid #0374B5;
+    padding: 25px;
     text-align: center;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 300px;
+
 }
 
 /* Style for the heading */
 .login-form h2 {
+    font-family: 'LatoWeb', 'Lato', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     color: #333;
     font-size: 24px;
     margin-bottom: 20px;
 }
+.login-text{
+    margin: 10px;
+    font-family: 'LatoWeb', 'Lato', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    padding: 10px;
 
+}
 /* Style for the user icon */
 .user-icon {
     margin: 10px 0;
@@ -35,6 +44,8 @@
 .TextInput {
     width: 100%;
     margin-bottom: 10px;
+    padding: 10px 20px;
+    margin-top: 30px;
 }
 
 /* Style for the login button */
@@ -51,3 +62,10 @@
 .Button:hover {
     background-color: #005bb8;
 }
+
+/* Style for logo */
+.Login-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
