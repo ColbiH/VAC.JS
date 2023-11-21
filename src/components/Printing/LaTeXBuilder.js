@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LaTeXWasm from "./LaTeX.wasm";
+//import { FetchQuizQuestions } from './FetchQuizQuestions';
+import {Checkbox, NumberInput} from "@instructure/ui";
 
 function extractContentBetweenPTags(inputString) {
     var tempElement = document.createElement('div');
@@ -12,20 +14,6 @@ function extractContentBetweenPTags(inputString) {
         return "No <p> tags found in the input string.";
     }
 }
-
-/*function shuffle(array) {
-    let currentIndex = array.length, randomIndex;
-
-    while (currentIndex !== 0) {
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-    }
-
-    return array;
-} */
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -34,13 +22,28 @@ function shuffleArray(array) {
     return array;
 }
 
+function extractAltTextFromImages(inputString) {
+    var tempElement = document.createElement('div');
+    tempElement.innerHTML = inputString;
 
-function Template(data) {
+    var imgElements = tempElement.querySelectorAll('img');
+
+    var altTextArray = [];
+    imgElements.forEach((img) => {
+    var altText = img.getAttribute('alt');
+    altTextArray.push(altText);
+    });
+
+    return altTextArray;
+}
+
+function Template(data, essayVspace, courseName, quizName) {
     let LaTeXTemplate = "\\documentclass[addpoints]{exam}\n" +
         "\\usepackage{comment}\n" +
         "\\usepackage{multicol}\n" +
         "\\usepackage{amsmath}\n" +
-        "\n" +
+        "\\usepackage{graphicx}" +
+        //"\\graphicspath{./Images/}"  +
         "\\begin{document}\n" +
         "\n" +
         "\\vspace{5mm}\n" +
@@ -52,7 +55,7 @@ function Template(data) {
         "\\makebox[\\textwidth]{Date:\\hrulefill}\n" +
         "\\begin{center}\n" +
         "\\fbox{\\fbox{\\parbox{5.5in}{\\centering\n" +
-        "Course: Quiz Name}}}\n" +
+        courseName + ": " + quizName + "}}}\n" +
         "\\end{center}\n" +
         "\\begin{questions}\n"
 
@@ -61,6 +64,15 @@ function Template(data) {
             let questionType = data[i].question_type;
             let questionText = extractContentBetweenPTags(data[i].question_text);
             let answerOptions = data[i].answers.map(answer => answer.text);
+            let altTextArray = extractAltTextFromImages(data[i].question_text);
+
+            for (let j = 0; j < altTextArray.length; j++) {
+                LaTeXTemplate += `\\begin{figure}[ht]
+            \\centering
+            \\centerline{\\includegraphics[width=0.5\\linewidth]{troll.jpg}}
+            \\caption{${altTextArray[j]}}  % Use alt text as the caption
+            \\end{figure}`
+            }
 
             if (questionType === "multiple_choice_question") {
                 let multiChoiceQuestion = "\\question " + questionText + " \n" +
@@ -86,7 +98,7 @@ function Template(data) {
                 let shortAnswerQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += shortAnswerQuestion;
             }
-            if(questionType === "fill_in_multiple_blanks_question"){
+            if (questionType === "fill_in_multiple_blanks_question") {
                 const placeholderRegex = /\[\w+\]/g;
                 questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
                 let multiBlankQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
@@ -101,21 +113,22 @@ function Template(data) {
                 }
                 LaTeXTemplate += "\\end{checkboxes}\\vspace{1cm}\n"
             }
-            if(questionType === "multiple_dropdowns_question"){
+            if (questionType === "multiple_dropdowns_question") {
                 const placeholderRegex = /\[\w+\]/g;
                 questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
                 let multiDropDownsQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += multiDropDownsQuestion;
             }
-            if(questionType === "numerical_question"){
+            if (questionType === "numerical_question") {
                 let numQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += numQuestion;
             }
-            if(questionType === "essay_question"){
-                let essayQuestion = "\\question " + questionText + "\\vspace{5cm}\n"
+            if (questionType === "essay_question") {
+                let essayQuestion = `\\question ${questionText} \\vspace{${essayVspace}cm}\n`;
                 LaTeXTemplate += essayQuestion;
+                console.log("Current essayVspace in Template:", essayVspace);
             }
-            if(questionType === "text_only_question"){
+            if (questionType === "text_only_question") {
                 let textOnlyQuestion = "\\question " + questionText + "\n"
                 LaTeXTemplate += textOnlyQuestion;
             }
@@ -152,13 +165,14 @@ function Template(data) {
                 for (let i = 0; i < shuffledAnswers.length; i++) {
                     const answer = shuffledAnswers[i];
 
-                    calculatedQuestion += `\\choice ${answer.answer} \\\\\n`;
+                    calculatedQuestion += `\\choice ${answer.answer} \n`;
                 }
 
                 calculatedQuestion += "\\end{choices}\n";
 
-                LaTeXTemplate += calculatedQuestion;
+                LaTeXTemplate += calculatedQuestion + "\\vspace{1cm}\n";
             }
+
         }
     }
 
@@ -170,16 +184,27 @@ function Template(data) {
     return LaTeXTemplate;
 }
 
-function LaTeXBuilder({ data }) {
-    if (!data || data.length === 0) {
-        return <div>Loading...</div>;
+    function LaTeXBuilder({ data, courseName, quizName }) {
+        console.log('Generated LaTeX:', data);
+        const [essayVspace, setEssayVspace] = useState(10);
+
+        const handleNumberInputChange = (event) => {
+            setEssayVspace(event.target.value);
+            console.log("Updated essayVspace:", event.target.value);
+        };
+
+        return (
+            <div>
+                <LaTeXWasm template={Template(data, essayVspace, courseName, quizName)}/>
+                <NumberInput
+                    renderLabel="How many lines would you like for free-response questions?"
+                    showArrows={false}
+                    placeholder={essayVspace.toString()}
+                    onChange={handleNumberInputChange}
+                />
+                <br></br>
+                <Checkbox label={'Use alt-text for images'} value="medium"/>
+            </div>
+        );
     }
-
-    return (
-        <div>
-            <LaTeXWasm template={Template(data)} />
-        </div>
-    );
-}
-
-export default LaTeXBuilder;
+    export default LaTeXBuilder;

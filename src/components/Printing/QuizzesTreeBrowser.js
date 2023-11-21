@@ -66,6 +66,7 @@ function transformDataForItems(classes) {
                         id: quiz.id,
                         name: quiz.title,
                         course_id: classInfo.id,
+                        course_name: classInfo.name,
                         collections: [],
                         items: {},
                     };
@@ -99,7 +100,7 @@ function QuizzesTreeBrowser({login, classes}) {
                 />
             </div>
             {clickedItem !== null && (
-                <FetchQuizQuestions login={login} course={transformDataForItems(classes)[clickedItem.id].course_id} quiz={clickedItem.id} />
+                <FetchQuizQuestions login={login} course_id={transformDataForItems(classes)[clickedItem.id].course_id} course_name={transformDataForItems(classes)[clickedItem.id].course_name} quiz_id={clickedItem.id} quiz_name={transformDataForItems(classes)[clickedItem.id].name} />
             )}
         </>
     );
