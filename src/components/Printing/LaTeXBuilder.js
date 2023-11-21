@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import LaTeXWasm from "./LaTeX.wasm";
 //import { FetchQuizQuestions } from './FetchQuizQuestions';
 import {Checkbox, NumberInput} from "@instructure/ui";
 
 function extractContentBetweenPTags(inputString) {
-    var tempElement = document.createElement('div');
-    tempElement.innerHTML = inputString;
-    var pElement = tempElement.querySelector('p');
+    return inputString
+        //The big issue with any Quizzes not being supported
+        //question_text often responds with HTML code which must be parsed properly!
 
-    if (pElement) {
-        return pElement.textContent;
-    } else {
-        return "No <p> tags found in the input string.";
-    }
+        //So some of the <br> exist at the front of the inputString which causes random spacing at the beginning of the question.
+
+        //Line break replaced with new line
+        .replace(/<br>/g, '\\leavevmode \\\\ ')
+        //New line replaced with LaTeX new line
+        .replace(/\n/g, '\\leavevmode \\\\ ')
+        //An HTML Catch all (take note of location as it might remove what is being worked on)
+        .replace(/<.*?>/g, '')
+        //Open Brackets
+        .replace(/{/g, '\\{')
+        //Close Brackets
+        .replace(/}/g, '\\}')
+        //Spacing
+        .replace(/&nbsp;/g, ' \\hphantom{s} ')
+        // < Symbol
+        .replace(/&lt;/g, '\\textless ')
+        .replace(/&gt;/g, '\\textgreater ')
+
+    // Might swap to \usepackage[T1]{fontenc} which will fix all < > errors, might help in other cases.
 }
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
