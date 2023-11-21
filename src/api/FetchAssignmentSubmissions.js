@@ -74,7 +74,7 @@ function FetchAssignmentSubmissions() {
                 // Need for loop for all submissions
                 console.log(dataRef.current[3].attachments[0].url);
                 let alyssasubmission = dataRef.current[3].attachments[0].url;
-                window.api.StartDownload(alyssasubmission);
+                window.api.StartDownload(alyssasubmission, location.state.testcases);
 
                 window.api.ListenForGrade((grade) => {
                     console.log('Grade: ', grade);

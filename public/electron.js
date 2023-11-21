@@ -5,7 +5,8 @@ const { exec } = require('child_process');
 let mainWindow;
 
 
-function compileAndRunJavaFile(filePath, callback) {
+function compileAndRunJavaFile(filePath, testcases, callback) {
+    let grade = 0;
     const compileAndRunCommand = `javac ${filePath} && java -cp ${path.dirname(filePath)} ${path.basename(filePath, '.java')}`;
 
     const javaProcess = exec(compileAndRunCommand, (error, stdout, stderr) => {
@@ -14,16 +15,19 @@ function compileAndRunJavaFile(filePath, callback) {
             callback(0);
         } else {
             console.log('Exit Code:', 0);
-            callback(100);
+            callback(grade);
         }
     });
 
-    javaProcess.stdin.write('2\n');
-    javaProcess.stdin.write('2\n');
+    javaProcess.stdin.write(testcases.sampleInput+'\n');
+    javaProcess.stdin.write(testcases.sampleInput+'\n');
     javaProcess.stdin.end();
 
     javaProcess.stdout.on('data', data => {
         console.log('Java execution output:', data.toString());
+        if (data.toString().trim() === testcases.expectedOutput.trim()){
+            grade += testcases.points;
+        }
     });
 }
 
@@ -84,7 +88,7 @@ function createWindow() {
 
 //Download Files
     ipcMain.on('download', (event, { payload }) => {
-        const { fileUrl } = payload;
+        const { fileUrl, testcases } = payload;
 
         const appPath = app.getAppPath();
 
@@ -101,7 +105,7 @@ function createWindow() {
                     const fileExtension = path.extname(savePath);
 
                     if (fileExtension === '.java') {
-                        compileAndRunJavaFile(savePath, (result) => {
+                        compileAndRunJavaFile(savePath, testcases, (result) => {
                             grade = result;
                             mainWindow.webContents.send('grade', { grade });
                         })

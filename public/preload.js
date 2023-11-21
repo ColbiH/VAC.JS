@@ -9,8 +9,8 @@ contextBridge.exposeInMainWorld("api", {
             throw error;
         }
         },
-    StartDownload: async (url) => {
-        ipcRenderer.send("download", { payload: { fileUrl: url } });
+    StartDownload: async (url, testcases) => {
+        ipcRenderer.send("download", { payload: { fileUrl: url, testcases } });
     },
     ListenForGrade: (callback) => {
         ipcRenderer.on('grade', (event, data) => {
