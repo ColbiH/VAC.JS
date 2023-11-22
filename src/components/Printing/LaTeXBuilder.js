@@ -4,29 +4,13 @@ import LaTeXWasm from "./LaTeX.wasm";
 import {Checkbox, NumberInput} from "@instructure/ui";
 
 function extractContentBetweenPTags(inputString) {
-    return inputString
-        //The big issue with any Quizzes not being supported
-        //question_text often responds with HTML code which must be parsed properly!
+    const parser = new DOMParser();
+    const doc3 = parser.parseFromString(inputString.replace(/<br>/g, '\n'), "text/html")
+    const modifiedString = doc3.documentElement.textContent
+    //console.log(modifiedString);
 
-        //So some of the <br> exist at the front of the inputString which causes random spacing at the beginning of the question.
-
-        //Line break replaced with new line
-        .replace(/<br>/g, '\\leavevmode \\\\ ')
-        //New line replaced with LaTeX new line
-        .replace(/\n/g, '\\leavevmode \\\\ ')
-        //An HTML Catch all (take note of location as it might remove what is being worked on)
-        .replace(/<.*?>/g, '')
-        //Open Brackets
-        .replace(/{/g, '\\{')
-        //Close Brackets
-        .replace(/}/g, '\\}')
-        //Spacing
-        .replace(/&nbsp;/g, ' \\hphantom{s} ')
-        // < Symbol
-        .replace(/&lt;/g, '\\textless ')
-        .replace(/&gt;/g, '\\textgreater ')
-
-    // Might swap to \usepackage[T1]{fontenc} which will fix all < > errors, might help in other cases.
+    return '\\begin{center}\n' +
+        '\\begin{lstlisting}[breaklines=true, basicstyle=\\rmfamily, columns=fullflexible, breakindent=0pt]\n' + modifiedString.replace(/\u00A0/g, ' ').trim() + '\n\\end{lstlisting} \\end{center}'
 }
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -57,6 +41,8 @@ function Template(data, essayVspace, courseName, quizName) {
         "\\usepackage{multicol}\n" +
         "\\usepackage{amsmath}\n" +
         "\\usepackage{graphicx}" +
+        "\\usepackage{listings}" +
+        "\\usepackage{layout}" +
         //"\\graphicspath{./Images/}"  +
         "\\begin{document}\n" +
         "\n" +
@@ -108,13 +94,13 @@ function Template(data, essayVspace, courseName, quizName) {
             }
             if (questionType === "short_answer_question") {
                 const placeholderRegex = /\[\w+\]/g;
-                questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
+                questionText = questionText.replace(placeholderRegex, "________");
                 let shortAnswerQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += shortAnswerQuestion;
             }
             if (questionType === "fill_in_multiple_blanks_question") {
                 const placeholderRegex = /\[\w+\]/g;
-                questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
+                questionText = questionText.replace(placeholderRegex, "________");
                 let multiBlankQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += multiBlankQuestion;
             }
@@ -129,7 +115,7 @@ function Template(data, essayVspace, courseName, quizName) {
             }
             if (questionType === "multiple_dropdowns_question") {
                 const placeholderRegex = /\[\w+\]/g;
-                questionText = questionText.replace(placeholderRegex, "\\underline{\\hspace{3cm}}");
+                questionText = questionText.replace(placeholderRegex, "________");
                 let multiDropDownsQuestion = "\\question " + questionText + "\\vspace{1cm}\n"
                 LaTeXTemplate += multiDropDownsQuestion;
             }
