@@ -1,7 +1,7 @@
 import {
     IconAdminLine,
     IconGradebookLine,
-    IconPrinterLine,
+    IconPrinterLine, ScreenReaderContent,
     SideNavBar
 } from "@instructure/ui";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -30,16 +30,16 @@ function Sidebar() {
                 <SideNavBar.Item
                     icon={ <img
                         src={logo}
-                        label="VAC.JS"
                         alt="Logo"
                         style={{ width: '50px', height: '50px', }}
                     />}
-                    href = '/logo'
+                    onClick={() => navigate('/printvsgrade', {state: {login: location.state.login, classes : location.state.classes }})}
                     themeOverride={{
                         backgroundColor: '#0374B5'
                     }}
 
-                />
+                 label={<ScreenReaderContent>Home</ScreenReaderContent>}/>
+
                 <SideNavBar.Item
                     icon={<IconAdminLine/>}
                     label="Login"

@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import {Button, FormFieldGroup, IconPlusSolid, Text, TextInput, TreeBrowser} from "@instructure/ui";
+import {
+    Button,
+    FormFieldGroup,
+    IconAddLine,
+    IconPlusSolid,
+    Text,
+    TextArea,
+    TextInput,
+    TreeBrowser
+} from "@instructure/ui";
 import { useNavigate } from 'react-router-dom';
 import "./AssignmentsDisplay.css"
 import Sidebar from "../Sidebar";
@@ -117,18 +126,18 @@ function AssignmentsTreeBrowser({login, classes}) {
                     </div>
 
                     <div className="input">
-                        <TextInput renderLabel="Sample Input" width="250px" value={testCases.sampleInput}
+                        <TextArea label="Sample Input" resize = "vertical" width="250px" value={testCases.sampleInput}
                                    onChange={(e) => setTestCases({ ...testCases, sampleInput: e.target.value })}/>
                     </div>
 
                     <div className="output">
-                        <TextInput renderLabel="Expected Output" width="150px" value={testCases.expectedOutput}
+                        <TextArea label="Expected Output" resize = "vertical" width="150px" value={testCases.expectedOutput}
                                    onChange={(e) => setTestCases({ ...testCases, expectedOutput: e.target.value })}/>
                     </div>
                 </FormFieldGroup>
 
                 <div className="add-test">
-                    <Button> <IconPlusSolid/> </Button>
+                    <Button renderIcon={IconAddLine}>Add Test Case</Button>
                 </div>
 
             </div>

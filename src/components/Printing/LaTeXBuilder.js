@@ -202,8 +202,6 @@ function Template(data, essayVspace, courseName, quizName) {
                     placeholder={essayVspace.toString()}
                     onChange={handleNumberInputChange}
                 />
-                <br></br>
-                <Checkbox label={'Use alt-text for images'} value="medium"/>
             </div>
         );
     }

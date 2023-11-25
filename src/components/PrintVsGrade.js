@@ -15,7 +15,7 @@ function PrintVsGrade() {
             </div>
             {<InstUISettingsProvider theme={canvas}>
                 <div className="quiz-pdf">
-                    <Tooltip color="primary-inverse" renderTip="Quizzes" placement="start" offsetX="5px">
+                    <Tooltip color="primary-inverse" renderTip="PDF Printer" placement="start" offsetX="5px">
                         <Button
                             size = "large"
                             margin = "small"
@@ -25,7 +25,7 @@ function PrintVsGrade() {
                 </div>
 
                 <div className="code-grader">
-                    <Tooltip color="primary-inverse" renderTip="Assignments" placement="end" offsetX="5px"> 
+                    <Tooltip color="primary-inverse" renderTip="Code Grader" placement="end" offsetX="5px">
                         <Button
                             size = "large"
                             margin = "small"
