@@ -115,7 +115,7 @@ function AssignmentsTreeBrowser({login, classes}) {
             </div>
             <div className="test-cases">
                 <FormFieldGroup
-                    description="Test Cases"
+                    // description="Test Cases"
                     colSpacing="medium"
                     layout="columns"
                     vAlign="top"
@@ -126,12 +126,12 @@ function AssignmentsTreeBrowser({login, classes}) {
                     </div>
 
                     <div className="input">
-                        <TextArea label="Sample Input" resize = "vertical" width="250px" value={testCases.sampleInput}
+                        <TextArea label="Input" height="8rem" maxHeight="8rem" width="250px" value={testCases.sampleInput}
                                    onChange={(e) => setTestCases({ ...testCases, sampleInput: e.target.value })}/>
                     </div>
 
                     <div className="output">
-                        <TextArea label="Expected Output" resize = "vertical" width="150px" value={testCases.expectedOutput}
+                        <TextArea label="Expected Output" height ="8rem" maxHeight="8rem" width="250px" value={testCases.expectedOutput}
                                    onChange={(e) => setTestCases({ ...testCases, expectedOutput: e.target.value })}/>
                     </div>
                 </FormFieldGroup>
@@ -143,18 +143,20 @@ function AssignmentsTreeBrowser({login, classes}) {
             </div>
 
 
-            <div className="assignment-name">
-                <Text color="primary" size="x-large" weight="bold">Assignment name here</Text>
+            <div className="instructions">
+                <Text color="primary" size="large" weight="bold">Enter the assigned point value, input, and expected output for each test case in boxes below.  Then click on appropriate assignment.</Text>
             </div>
 
-            <TreeBrowser
-                size="large"
-                collections={transformDataForTreeBrowser(classes)}
-                items={transformDataForItems(classes)}
-                defaultExpanded={[1]}
-                rootId={1}
-                onItemClick={handleItemClick}
-            />
+            <div className="assignment-tree">
+                <TreeBrowser
+                    size="large"
+                    collections={transformDataForTreeBrowser(classes)}
+                    items={transformDataForItems(classes)}
+                    defaultExpanded={[1]}
+                    rootId={1}
+                    onItemClick={handleItemClick}
+                />
+            </div>
         </>
     );
 }

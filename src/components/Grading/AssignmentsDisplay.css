@@ -1,47 +1,47 @@
 .assignment-tree {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.assignment-table {
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 75%;
-}
-
-.download-button {
-    position: absolute;
-    top: 80px;
-    right: 300px;
+    position: relative;
+    top: -500px;
+    left: 120px;
+    /*transform: translate(-50%, -50%);*/
 }
 
 .grade-button {
-    position: absolute;
-    top: 80px;
-    right: 100px;
+    position: relative;
+    top:-700px;
+    left: 100px;
+}
+
+.download-button {
+    position: relative;
+    top: -638px;
+    left: 250px;
 }
 
 .toggle {
-    position: absolute;
-    top: 180px;
-    right: 110px;
+    position: relative;
+    top: -745px;
+    left: 440px;
 }
 
-.assignment-name {
-    position: absolute;
-    top: 50px;
-    left: 170px;
+.assignment-table {
+    position: relative;
+    top: -700px;
+    left: 120px;
+    /*transform: translate(-50%, -50%);*/
+    width: 75%;
+}
+
+.instructions {
+    position: relative;
+    top: -700px;
+    left: 150px;
 }
 
 .test-cases {
-    position: absolute;
-    top: 25%;
-    left: 20%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    top: -550px;
+    left: 150px;
+    /*transform: translate(-50%, -50%);*/
 }
 
 .input {
@@ -56,6 +56,12 @@
 
 .add-test {
     position: absolute;
-    top: 60%;
-    left: 525px;
+    top: auto;
+    left: 625px;
+}
+
+.assignment-name {
+    position: relative;
+    top: -650px;
+    left: 100px;
 }
