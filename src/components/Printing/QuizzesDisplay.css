@@ -25,8 +25,20 @@
 }
 
 .quizzes-tree {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    top: -650px;
+    left: 120px;
+    /*transform: translate(-50%, -50%);*/
+}
+
+.download-button-pdf {
+    position: relative;
+    top: -525px;
+    left: 100px;
+}
+
+.free-response {
+    position: relative;
+    top: -675px;
+    left: 100px;
 }

@@ -13,7 +13,7 @@ function Sidebar() {
     const location = useLocation();
 
     return (
-        <div style={{height: '100vh'}}>
+        <div style={{height: '100vh', display: "relative"}}>
             <SideNavBar
                 label="Main navigation"
                 toggleLabel={{
@@ -23,7 +23,8 @@ function Sidebar() {
 
                 }}
                 themeOverride={{
-                    backgroundColor: '#0374B5'
+                    backgroundColor: '#0374B5',
+                    height: "100%"
                 }}
 
             >

@@ -32,9 +32,11 @@ function App({ template }) {
                 frameBorder="0"
                 scrolling="no"
             ></iframe>
-            <div className="download-button">
+            <div className="download-button-pdf">
                 <InstUISettingsProvider theme={canvas}>
-                    <Button onClick={compileLatexInIframe} color="danger" margin="small">Download</Button>
+                    <Button onClick={compileLatexInIframe}
+                            color="primary"
+                            margin="small">Download</Button>
                 </InstUISettingsProvider>
             </div>
         </div>

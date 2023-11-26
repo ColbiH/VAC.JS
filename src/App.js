@@ -15,7 +15,7 @@ import FetchAssignmentSubmissions from "./api/FetchAssignmentSubmissions";
 
 function App() {
     return (
-        <div className="App">
+        // <div className="App">
             <Routes>
                 {/* Origin/Development Page */}
                 <Route path = "/" element = {<Login />} />
@@ -40,7 +40,7 @@ function App() {
                 <Route path = "/valentina" element = {<FrontEnd />} />
                 <Route path = "/backend" element = {<BackEnd />} />
             </Routes>
-        </div>
+        // </div>
     );
 }
 
