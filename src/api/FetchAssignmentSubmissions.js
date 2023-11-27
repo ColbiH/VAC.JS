@@ -142,7 +142,7 @@ function FetchAssignmentSubmissions() {
             </div>
 
             <div className="assignment-name">
-                <Text color="primary" size="x-large" weight="bold">Assignment name here</Text>
+                <Text color="primary" size="x-large" weight="bold">{location.state.quiz_name}</Text>
             </div>
 
             <div className="download-button">

@@ -103,7 +103,7 @@ function QuizzesTreeBrowser({login, classes}) {
             </div>
             <div className="quizzes-tree">
                 <TreeBrowser
-                    size= "large"
+                    size= "medium"
                     collections={transformDataForTreeBrowser(classes)}
                     items={transformDataForItems(classes)}
                     defaultExpanded={[1]}
@@ -116,6 +116,9 @@ function QuizzesTreeBrowser({login, classes}) {
                     variant="compact"
                     labelNext="Next Page"
                     labelPrev="Previous Page"
+                    themeOverride={{
+                        margin: "small"
+                    }}
                 >
                     {pages}
                 </Pagination>

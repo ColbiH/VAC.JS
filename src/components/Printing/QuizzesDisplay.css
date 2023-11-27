@@ -26,8 +26,9 @@
 
 .quizzes-tree {
     position: relative;
-    top: -650px;
+    top: -685px;
     left: 120px;
+    padding-top: 2rem;
     /*transform: translate(-50%, -50%);*/
 }
 
@@ -39,6 +40,6 @@
 
 .free-response {
     position: relative;
-    top: -675px;
+    top: -725px;
     left: 100px;
 }

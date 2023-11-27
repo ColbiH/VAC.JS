@@ -1,10 +1,3 @@
-.assignment-tree {
-    position: relative;
-    top: -500px;
-    left: 120px;
-    /*transform: translate(-50%, -50%);*/
-}
-
 .grade-button {
     position: relative;
     top:-700px;
@@ -33,31 +26,42 @@
 
 .instructions {
     position: relative;
-    top: -700px;
+    top: -650px;
     left: 150px;
 }
 
 .test-cases {
     position: relative;
-    top: -550px;
+    top: -600px;
     left: 150px;
     /*transform: translate(-50%, -50%);*/
 }
 
 .input {
-    position: absolute;
-    left: 90px;
+    position: relative;
+    left: -250px;
 }
 
 .output {
-    position: absolute;
-    left: 360px;
+    position: relative;
+    left: -300px;
+}
+
+.points {
+    position: relative;
 }
 
 .add-test {
-    position: absolute;
-    top: auto;
-    left: 625px;
+    position: relative;
+    top: -100px;
+    left: 650px;
+}
+
+.assignment-tree {
+    position: relative;
+    top: -600px;
+    left: 120px;
+    /*transform: translate(-50%, -50%);*/
 }
 
 .assignment-name {

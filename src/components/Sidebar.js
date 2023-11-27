@@ -6,6 +6,7 @@ import {
 } from "@instructure/ui";
 import {useLocation, useNavigate} from "react-router-dom";
 import logo from './images/vacjs-high-resolution-logo-white-transparent.png';
+import "./Sidebar.css";
 
 function Sidebar() {
     //const { state: { login } = {} } = useLocation();
@@ -13,7 +14,7 @@ function Sidebar() {
     const location = useLocation();
 
     return (
-        <div style={{height: '100vh', display: "relative"}}>
+        <div className = "sidebar">
             <SideNavBar
                 label="Main navigation"
                 toggleLabel={{
@@ -24,7 +25,8 @@ function Sidebar() {
                 }}
                 themeOverride={{
                     backgroundColor: '#0374B5',
-
+                    minimizedWidth: '4rem',
+                    overflow: 'hidden'
                 }}
 
             >
@@ -32,7 +34,7 @@ function Sidebar() {
                     icon={ <img
                         src={logo}
                         alt="Logo"
-                        style={{ width: '55px', height: '55px', }}
+                        style={{ width: '50px', height: '50px', }}
                     />}
                     onClick={() => navigate('/printvsgrade', {state: {login: location.state.login, classes : location.state.classes }})}
                     themeOverride={{
