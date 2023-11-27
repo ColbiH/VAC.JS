@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {TreeBrowser} from "@instructure/ui";
+import {Pagination, TreeBrowser} from "@instructure/ui";
 import "./QuizzesDisplay.css";
 import FetchQuizQuestions from "../../api/FetchQuizQuestions";
 import Sidebar from "../Sidebar";
@@ -79,10 +79,22 @@ function transformDataForItems(classes) {
 
 function QuizzesTreeBrowser({login, classes}) {
     const [clickedItem, setClickedItem] = useState(null);
+    const [currentPage, setCurrentPage] = useState(0);
+
+    const setPages = (page) => {
+        setCurrentPage(page);
+    };
 
     const handleItemClick = (item) => {
         setClickedItem(item);
     };
+
+    const pages = Array.from(Array(9)).map((v, i) => <Pagination.Page
+        key={i}
+        onClick={setPages}
+        current={i === currentPage}>
+        {i + 1}
+    </Pagination.Page>);
 
     return (
         <>
@@ -98,7 +110,18 @@ function QuizzesTreeBrowser({login, classes}) {
                     rootId={1}
                     onItemClick={handleItemClick}
                 />
+                <Pagination
+                    as="nav"
+                    margin="small"
+                    variant="compact"
+                    labelNext="Next Page"
+                    labelPrev="Previous Page"
+                >
+                    {pages}
+                </Pagination>
             </div>
+
+
             {clickedItem !== null && (
                 <FetchQuizQuestions login={login} course_id={transformDataForItems(classes)[clickedItem.id].course_id} course_name={transformDataForItems(classes)[clickedItem.id].course_name} quiz_id={clickedItem.id} quiz_name={transformDataForItems(classes)[clickedItem.id].name} />
             )}
