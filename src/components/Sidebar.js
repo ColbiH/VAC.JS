@@ -5,7 +5,7 @@ import {
     SideNavBar
 } from "@instructure/ui";
 import {useLocation, useNavigate} from "react-router-dom";
-import logo from './images/logo-color.png';
+import logo from './images/vacjs-high-resolution-logo-white-transparent.png';
 
 function Sidebar() {
     //const { state: { login } = {} } = useLocation();
@@ -24,7 +24,7 @@ function Sidebar() {
                 }}
                 themeOverride={{
                     backgroundColor: '#0374B5',
-                    height: "100%"
+
                 }}
 
             >
@@ -32,7 +32,7 @@ function Sidebar() {
                     icon={ <img
                         src={logo}
                         alt="Logo"
-                        style={{ width: '50px', height: '50px', }}
+                        style={{ width: '55px', height: '55px', }}
                     />}
                     onClick={() => navigate('/printvsgrade', {state: {login: location.state.login, classes : location.state.classes }})}
                     themeOverride={{

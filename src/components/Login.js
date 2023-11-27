@@ -20,8 +20,8 @@ function Login() {
             <div className="login-container">
                 <div className="login-form">
 
-                    <img src={logo} width={100} height={100} />
-                    <h2>Welcome to VAC.JS</h2>
+                    <img src={logo} alt={"logo"} width={100} height={100} />
+                    {/*<h2>Welcome to VAC.JS</h2>*/}
 
                     <div className = "login-text">
                         <TextInput
