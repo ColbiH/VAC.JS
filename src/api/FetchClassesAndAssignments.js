@@ -11,62 +11,48 @@ function FetchClassesAndAssignments({login}) {
     const url = 'https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher&per_page=500';
 
     useEffect(() => {
-        const options = {
-            method: 'GET',
-            headers: {
-                Authorization: 'Bearer ' + location.state.login.api_key,
-            },
-        };
+        const fetchData = async () => {
+            try {
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        Authorization: 'Bearer ' + location.state.login.api_key,
+                    },
+                };
 
-        FetchCanvas(url, options)
-            .then((classData) => {
-                setClasses(classData);
+                const classData = await FetchCanvas(url, options);
+                console.log(classData);
 
-                const classPromises = classData.map((classInfo) => {
-                    return FetchCanvas(`https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/assignments?per_page=500`, options)
-                        .then((quizData) => {
-                            if (Array.isArray(quizData)) {
-                                classInfo.quizzes = quizData.filter((quiz) =>  quiz.submission_types.includes('online_upload'));
-                            }
-                            return classInfo;
-                        })
-                        .catch((error) => {
-                            console.error(`Error fetching quizzes for class ${classInfo.id}:`, error);
-                            return classInfo;
-                        });
+                const classPromises = classData.map(async (classInfo) => {
+                    try {
+                        const quizData = await FetchCanvas(`https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/assignments?per_page=500`, options);
+                        if (Array.isArray(quizData)) {
+                            classInfo.quizzes = quizData.filter((quiz) => quiz.submission_types.includes('online_upload'));
+                        }
+                        return classInfo;
+                    } catch (error) {
+                        console.error(`Error fetching quizzes for class ${classInfo.id}:`, error);
+                        return classInfo;
+                    }
                 });
 
-                return Promise.all(classPromises);
-            })
-            .then((classesWithQuizzes) => {
+                const classesWithQuizzes = await Promise.all(classPromises);
+
+                setClasses(classesWithQuizzes);
                 console.log(classesWithQuizzes);
-            })
-            .catch((error) => {
-                console.error('Error fetching class data:', error);
-            })
-            .finally(() => {
                 setIsLoading(false);
-            });
+
+                navigate('/assignmentsam', {state: {login: location.state.login, classes: classesWithQuizzes}})
+            } catch (error) {
+                console.error('Error fetching class data:', error);
+                setIsLoading(false);
+            }
+        };
+        fetchData();
     }, []);
 
     if (isLoading) {
-        return <Spinner renderTitle="Loading" size="small" margin="0 0 0 medium" />;
+        return <Spinner renderTitle="Loading" size="small" margin="0 0 0 medium"/>;
     }
-
-    if (classes.length > 0) {
-        const firstClass = classes[0];
-        if (firstClass.quizzes) {
-            return (
-                <div>
-                    {navigate('/assignmentsam', {state: {login: location.state.login, classes: classes }})}
-                </div>
-            );
-        } else {
-            return <p>No quizzes available for the first class.</p>;
-        }
-    }
-
-    return <p>No classes available for this teacher.</p>;
 }
-
 export default FetchClassesAndAssignments;
