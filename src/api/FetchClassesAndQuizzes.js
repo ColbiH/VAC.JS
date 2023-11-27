@@ -8,7 +8,7 @@ function FetchClassesAndQuizzes() {
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const navigate = useNavigate();
-    const url = 'https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher?per_page=500';
+    const url = 'https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher&per_page=500';
 
     useEffect(() => {
         const fetchData = async () => {

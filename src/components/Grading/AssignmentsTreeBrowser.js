@@ -120,7 +120,7 @@ function AssignmentsTreeBrowser({login, classes}) {
             <Button
                 renderIcon={IconAddLine}
                 onClick={setPlus}>Add Test Case</Button>
-            {clickedPlus ? <BaseTestCases/>: null}
+            {/*{clickedPlus ? <BaseTestCases/>: null}*/}
         </div>
 
     const [clickedPlus, setClickedPlus] = useState(false);

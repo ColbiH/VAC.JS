@@ -187,16 +187,15 @@ function FetchAssignmentSubmissions() {
                 <Text color="primary" size="x-large" weight="bold">{location.state.quiz_name}</Text>
             </div>
 
-            <div className="download-button">
-                <Button color="secondary" margin="small" onClick={() => handleDownloadSubmissions(location)}>Download All  <IconDownloadLine/></Button>
-            </div>
-
             <div className="grade-button">
                 <Button color="primary" margin="small" onClick={() => handleButtonClick()}>
                     Grade All <IconGradebookExportLine />
                 </Button>
             </div>
 
+            <div className="download-button">
+                <Button color="secondary" margin="small" onClick={() => handleDownloadSubmissions(location)}>Download All  <IconDownloadLine/></Button>
+            </div>
 
             <div className="toggle">
                 <Checkbox label="Publish grades" value="medium" variant="toggle" />
