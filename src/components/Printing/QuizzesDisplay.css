@@ -26,20 +26,20 @@
 
 .quizzes-tree {
     position: relative;
-    top: -685px;
+    top: -1100px;
     left: 120px;
-    padding-top: 2rem;
+    padding-top: -10rem;
     /*transform: translate(-50%, -50%);*/
 }
 
 .download-button-pdf {
     position: relative;
-    top: -525px;
+    top: -1025px;
     left: 100px;
 }
 
 .free-response {
     position: relative;
-    top: -725px;
+    top: -1025px;
     left: 100px;
 }

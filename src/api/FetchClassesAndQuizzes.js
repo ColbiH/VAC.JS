@@ -8,7 +8,7 @@ function FetchClassesAndQuizzes() {
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const navigate = useNavigate();
-    const url = 'https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher';
+    const url = 'https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher&per_page=500';
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,7 +24,7 @@ function FetchClassesAndQuizzes() {
 
                 const classPromises = classData.map(async (classInfo) => {
                     try {
-                        const quizData = await FetchCanvas(`https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/quizzes`, options);
+                        const quizData = await FetchCanvas(`https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/quizzes?per_page=500`, options);
                         classInfo.quizzes = quizData;
                         return classInfo;
                     } catch (error) {

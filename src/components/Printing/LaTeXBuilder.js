@@ -52,7 +52,7 @@ function Template(data, essayVspace, courseName, quizName) {
         "\n" +
         "\\vspace{5mm}\n" +
         "\n" +
-        "\\makebox[\\textwidth]{Date:\\hrulefill}\n" +
+        "\\makebox{Date:\\underline{\\hspace{5cm}}}\n" +
         "\\begin{center}\n" +
         "\\fbox{\\fbox{\\parbox{5.5in}{\\centering\n" +
         courseName + ": " + quizName + "}}}\n" +

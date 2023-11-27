@@ -4,7 +4,7 @@ import LaTeXBuilder from "../components/Printing/LaTeXBuilder";
 
 function FetchQuizQuestions({login, course_id, course_name, quiz_id, quiz_name}) {
     const [data, setData] = useState([]);
-    const url = 'https://' + login.canvas_url + '/api/v1/courses/' + course_id + '/quizzes/' + quiz_id + '/questions';
+    const url = 'https://' + login.canvas_url + '/api/v1/courses/' + course_id + '/quizzes/' + quiz_id + '/questions?per_page=500';
 
     console.log(course_name);
     console.log(quiz_name);

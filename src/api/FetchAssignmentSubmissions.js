@@ -14,6 +14,8 @@ import {
 } from '@instructure/ui';
 import Sidebar from "../components/Sidebar";
 
+
+
 const rows = [
     {
         id: '1',
@@ -26,8 +28,35 @@ const rows = [
     },
 ]
 
+function handleDownloadSubmissions(location) {
+    const GEToptions = {
+        method: 'GET',
+        headers: {
+            Authorization: 'Bearer ' + location.state.login.api_key,
+        },
+    };
+
+    const PUToptions = {
+        method: 'PUT',
+        headers: {
+            Authorization: 'Bearer ' + location.state.login.api_key,
+        },
+    };
+    const url =
+        'https://' +
+        location.state.login.canvas_url +
+        '/api/v1/courses/' +
+        location.state.course +
+        '/assignments/' +
+        location.state.quiz +
+        '/submissions?zip=1';
+    FetchCanvas(url, GEToptions);
+}
+
 function FetchAssignmentSubmissions() {
-    const [gradeReceived, setGradeReceived] = useState(false);
+    const [graded, setGraded] = useState(false);
+    const [users, setUsers] = useState([]);
+    const [rows, setRows] = useState([]);
     const dataRef = useRef([]);
     const location = useLocation();
     const url =
@@ -38,62 +67,75 @@ function FetchAssignmentSubmissions() {
         '/assignments/' +
         location.state.quiz +
         '/submissions';
+    const urlUser = 'https://ufl.instructure.com/api/v1/courses/' + location.state.course + '/users';
+    const GEToptions = {
+        method: 'GET',
+        headers: {
+            Authorization: 'Bearer ' + location.state.login.api_key,
+        },
+    };
 
+    const PUToptions = {
+        method: 'PUT',
+        headers: {
+            Authorization: 'Bearer ' + location.state.login.api_key,
+        },
+    };
     useEffect(() => {
-        const GEToptions = {
-            method: 'GET',
-            headers: {
-                Authorization: 'Bearer ' + location.state.login.api_key,
-            },
-        };
-
-        const PUToptions = {
-            method: 'PUT',
-            headers: {
-                Authorization: 'Bearer ' + location.state.login.api_key,
-            },
-        };
-
-        FetchCanvas(url, GEToptions)
-            .then((result) => {
+        Promise.all([
+            FetchCanvas(urlUser, GEToptions),
+            FetchCanvas(url, GEToptions)
+        ])
+            .then(([users, result]) => {
+                setUsers(users);
+                console.log(users);
 
                 dataRef.current = result;
 
-                dataRef.current.map((entry, index) => {
-                    //Add to Table
-                    rows.push({
-                        id: entry.id,
-                        Name: entry.user_id,
-                        ID: entry.user_id,
-                        Submission: entry.workflow_state,
-                        Download: 'https://ufl.instructure.com/ex2.cpp/download',
-                        Grade_Status: entry.grade,
-                        Score: entry.grade,
-                    });
-                });
-                // Need for loop for all submissions
-                console.log(dataRef.current[3].attachments[0].url);
-                let alyssasubmission = dataRef.current[3].attachments[0].url;
-                window.api.StartDownload(alyssasubmission, location.state.testcases);
+                const newRows = dataRef.current.map((entry) => ({
+                    id: entry.id,
+                    Name: users.find(user => user.id === entry.user_id)?.short_name,
+                    ID: entry.user_id,
+                    Submission: entry.workflow_state,
+                    Download: 'https://ufl.instructure.com/ex2.cpp/download',
+                    Grade_Status: entry.grade,
+                    Score: entry.grade,
+                }));
 
-                window.api.ListenForGrade((grade) => {
-                    console.log('Grade: ', grade);
-                    FetchCanvas(
-                        url + '/1060168?submission[posted_grade]=' + grade,
-                        PUToptions
-                    );
-                    setGradeReceived(true);
-                });
+                setRows(newRows);
             })
+
+
             .catch((error) => {
                 console.error('Error fetching data:', error);
             });
-    }, []);
+    }, [graded]);
 
+    const handleButtonClick = async () => {
+        try {
+            for (let i = 0; i < dataRef.current.length; i++) {
+                const submission = dataRef.current[i];
 
-    if (!gradeReceived) {
-        return null;
-    }
+                if (submission.attachments && submission.attachments.length > 0) {
+                    const attachment = submission.attachments[0];
+                    const submissionUrl = attachment.url;
+                    console.log('Submission URL:', submissionUrl);
+
+                    window.api.StartDownload(submissionUrl, location.state.testcases);
+
+                    window.api.ListenForGrade((grade) => {
+                        console.log('Grade:', grade);
+                        FetchCanvas(`${url}/${submission.user_id}?submission[posted_grade]=${grade}`, PUToptions);
+                    });
+                }
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+        setGraded(true);
+    };
+
 
     const headers = [
         {
@@ -146,12 +188,15 @@ function FetchAssignmentSubmissions() {
             </div>
 
             <div className="download-button">
-                <Button color="secondary" margin="small">Download All  <IconDownloadLine/></Button>
+                <Button color="secondary" margin="small" onClick={() => handleDownloadSubmissions(location)}>Download All  <IconDownloadLine/></Button>
             </div>
 
             <div className="grade-button">
-                <Button color="primary" margin="small">Grade All  <IconGradebookExportLine/></Button>
+                <Button color="primary" margin="small" onClick={() => handleButtonClick()}>
+                    Grade All <IconGradebookExportLine />
+                </Button>
             </div>
+
 
             <div className="toggle">
                 <Checkbox label="Publish grades" value="medium" variant="toggle" />

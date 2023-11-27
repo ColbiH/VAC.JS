@@ -8,7 +8,7 @@ function FetchClassesAndAssignments({login}) {
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const navigate = useNavigate();
-    const url = 'https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher';
+    const url = 'https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher&per_page=500';
 
     useEffect(() => {
         const options = {
@@ -23,7 +23,7 @@ function FetchClassesAndAssignments({login}) {
                 setClasses(classData);
 
                 const classPromises = classData.map((classInfo) => {
-                    return FetchCanvas(`https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/assignments`, options)
+                    return FetchCanvas(`https://${location.state.login.canvas_url}/api/v1/courses/${classInfo.id}/assignments?per_page=500`, options)
                         .then((quizData) => {
                             if (Array.isArray(quizData)) {
                                 classInfo.quizzes = quizData.filter((quiz) =>  quiz.submission_types.includes('online_upload'));
