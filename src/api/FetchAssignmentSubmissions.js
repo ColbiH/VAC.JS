@@ -107,7 +107,7 @@ function FetchAssignmentSubmissions() {
             .catch((error) => {
                 console.error('Error fetching data:', error);
             });
-    }, [() => graded]);
+    }, [graded]);
 
 
     const handleButtonClick = async () => {
@@ -132,13 +132,7 @@ function FetchAssignmentSubmissions() {
         } catch (error) {
             console.error('Error:', error);
         }
-
-        console.log("Before setGraded:", graded);
-
             setGraded(true);
-            setGraded(true);
-
-        console.log("After setGraded:", graded);
     };
 
 
