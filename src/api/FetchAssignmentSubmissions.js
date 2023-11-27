@@ -67,7 +67,7 @@ function FetchAssignmentSubmissions() {
         '/assignments/' +
         location.state.quiz +
         '/submissions';
-    const urlUser = 'https://ufl.instructure.com/api/v1/courses/' + location.state.course + '/users';
+    const urlUser = 'https://' + location.state.login.canvas_url + '/api/v1/courses/' + location.state.course + '/users';
     const GEToptions = {
         method: 'GET',
         headers: {
@@ -104,12 +104,11 @@ function FetchAssignmentSubmissions() {
 
                 setRows(newRows);
             })
-
-
             .catch((error) => {
                 console.error('Error fetching data:', error);
             });
-    }, [graded]);
+    }, [() => graded]);
+
 
     const handleButtonClick = async () => {
         try {
@@ -133,7 +132,13 @@ function FetchAssignmentSubmissions() {
         } catch (error) {
             console.error('Error:', error);
         }
-        setGraded(true);
+
+        console.log("Before setGraded:", graded);
+
+            setGraded(true);
+            setGraded(true);
+
+        console.log("After setGraded:", graded);
     };
 
 
