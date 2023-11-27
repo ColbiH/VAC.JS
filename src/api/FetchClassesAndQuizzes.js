@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Spinner } from "@instructure/ui";
+import "../components/Grading/AssignmentsDisplay.css";
 
 function FetchClassesAndQuizzes() {
     const [classes, setClasses] = useState([]);
@@ -48,7 +49,7 @@ function FetchClassesAndQuizzes() {
     }, []);
 
     if (isLoading) {
-        return <Spinner renderTitle="Loading" size="small" margin="0 0 0 medium" />;
+        return <div className='quiz-spinner'> <Spinner renderTitle="Loading" size="small" margin="0 0 0 medium" /> </div>;
     }
 
     return null;

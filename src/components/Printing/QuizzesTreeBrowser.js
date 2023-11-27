@@ -103,25 +103,25 @@ function QuizzesTreeBrowser({login, classes}) {
             </div>
             <div className="quizzes-tree">
                 <TreeBrowser
-                    size= "medium"
+                    size= "large"
                     collections={transformDataForTreeBrowser(classes)}
                     items={transformDataForItems(classes)}
                     defaultExpanded={[1]}
                     rootId={1}
                     onItemClick={handleItemClick}
                 />
-                <Pagination
-                    as="nav"
-                    margin="small"
-                    variant="compact"
-                    labelNext="Next Page"
-                    labelPrev="Previous Page"
-                    themeOverride={{
-                        margin: "small"
-                    }}
-                >
-                    {pages}
-                </Pagination>
+                {/*<Pagination*/}
+                {/*    as="nav"*/}
+                {/*    margin="small"*/}
+                {/*    variant="compact"*/}
+                {/*    labelNext="Next Page"*/}
+                {/*    labelPrev="Previous Page"*/}
+                {/*    themeOverride={{*/}
+                {/*        margin: "small"*/}
+                {/*    }}*/}
+                {/*>*/}
+                {/*    {pages}*/}
+                {/*</Pagination>*/}
             </div>
 
 

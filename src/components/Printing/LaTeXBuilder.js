@@ -195,7 +195,7 @@ function Template(data, essayVspace, courseName, quizName) {
 
         return (
             <div>
-                <LaTeXWasm template={Template(data, essayVspace, courseName, quizName)}/>
+
                 <div className={"free-response"}>
                     <NumberInput renderLabel="How many lines would you like for free-response questions?"
                                  showArrows={false}
@@ -204,6 +204,7 @@ function Template(data, essayVspace, courseName, quizName) {
                                  onChange={handleNumberInputChange}
                     />
                 </div>
+                <LaTeXWasm template={Template(data, essayVspace, courseName, quizName)}/>
 
             </div>
         );

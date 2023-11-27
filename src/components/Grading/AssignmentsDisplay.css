@@ -1,71 +1,94 @@
-.grade-button {
-    position: relative;
-    top:-700px;
-    left: 100px;
-}
-
-.download-button {
-    position: relative;
-    top: -638px;
-    left: 250px;
-}
-
-.toggle {
-    position: relative;
-    top: -745px;
-    left: 440px;
-}
-
-.assignment-table {
-    position: relative;
-    top: -700px;
-    left: 120px;
-    /*transform: translate(-50%, -50%);*/
-    width: 75%;
-}
-
 .instructions {
     position: relative;
-    top: -650px;
-    left: 150px;
+    top: 50px;
+    left: 100px;
+    overflow: hidden;
 }
 
 .test-cases {
     position: relative;
-    top: -600px;
-    left: 150px;
+    top: 100px;
+    left: 100px;
+    overflow: hidden;
     /*transform: translate(-50%, -50%);*/
-}
-
-.input {
-    position: relative;
-    left: -250px;
-}
-
-.output {
-    position: relative;
-    left: -300px;
 }
 
 .points {
     position: relative;
 }
 
+.input {
+    position: relative;
+    left: -200px;
+}
+
+.output {
+    position: relative;
+    left: -225px;
+}
+
 .add-test {
     position: relative;
-    top: -100px;
-    left: 650px;
+    top: -90px;
+    left: 675px;
 }
 
 .assignment-tree {
     position: relative;
-    top: -600px;
-    left: 120px;
+    top: 100px;
+    left: 100px;
+    overflow: hidden;
     /*transform: translate(-50%, -50%);*/
 }
 
 .assignment-name {
     position: relative;
-    top: -650px;
+    top: 50px;
     left: 100px;
+    overflow: hidden;
+}
+
+.grade-button {
+    position: relative;
+    top: 75px;
+    left: 100px;
+    overflow: hidden;
+}
+
+.download-button {
+    position: relative;
+    top: 13px;
+    left: 250px;
+    overflow: hidden;
+}
+
+.toggle {
+    position: relative;
+    top: -32px;
+    left: 440px;
+    overflow: hidden;
+}
+
+.assignment-table {
+    position: relative;
+    top: 25px;
+    left: 100px;
+    /*transform: translate(-50%, -50%);*/
+    width: 75%;
+    overflow: hidden;
+}
+
+.assignment-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.quiz-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }
