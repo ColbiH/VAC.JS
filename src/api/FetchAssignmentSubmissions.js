@@ -97,7 +97,7 @@ function FetchAssignmentSubmissions() {
                     Name: users.find(user => user.id === entry.user_id)?.short_name,
                     ID: entry.user_id,
                     Submission: entry.workflow_state,
-                    Download: 'https://ufl.instructure.com/ex2.cpp/download',
+                    Download: entry.attachments && entry.attachments.length > 0 ? entry.attachments[0].url : null,
                     Grade_Status: entry.grade,
                     Score: entry.grade,
                 }));
@@ -235,6 +235,12 @@ function FetchAssignmentSubmissions() {
                                                 <Pill color="danger" margin="x-small">Not Graded</Pill>
                                             ) : (
                                                 <Pill color="success" margin="x-small">Graded</Pill>
+                                            )
+                                        ) : id === 'Download' ? (
+                                            row[id] === null ? null : (
+                                                <Link href={row[id]} target="_blank" rel="noopener noreferrer">
+                                                    Download
+                                                </Link>
                                             )
                                         ) : (
                                             row[id]
