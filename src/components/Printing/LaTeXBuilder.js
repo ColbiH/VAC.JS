@@ -29,7 +29,8 @@ function extractAltTextFromImages(inputString) {
     var altTextArray = [];
     imgElements.forEach((img) => {
     var altText = img.getAttribute('alt');
-    altTextArray.push(altText);
+    altTextArray.push(altText.replace(/<br>/g, ' ')
+        .replace(/\n/g, ' '));
     });
 
     return altTextArray;
@@ -70,7 +71,7 @@ function Template(data, essayVspace, courseName, quizName) {
                 LaTeXTemplate += `\\begin{figure}[ht]
             \\centering
             \\centerline{\\includegraphics[width=0.5\\linewidth]{troll.jpg}}
-            \\caption{${altTextArray[j]}}  % Use alt text as the caption
+            \\caption{\\detokenize{${altTextArray[j]}}}  % Use alt text as the caption
             \\end{figure}`
             }
 
@@ -79,7 +80,7 @@ function Template(data, essayVspace, courseName, quizName) {
                     "\\begin{choices} \n"
                 LaTeXTemplate += multiChoiceQuestion;
                 for (let j = 0; j < answerOptions.length; j++) {
-                    LaTeXTemplate += "\\choice " + answerOptions[j] + " \n"
+                    LaTeXTemplate += `\\choice \\detokenize{${answerOptions[j]}}` + " \n"
                 }
                 LaTeXTemplate += "\\end{choices}\\vspace{1cm}\n"
             }
