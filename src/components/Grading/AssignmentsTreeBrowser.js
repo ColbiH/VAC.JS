@@ -120,7 +120,7 @@ function AssignmentsTreeBrowser({login, classes}) {
             <Button
                 renderIcon={IconAddLine}
                 onClick={setPlus}>Add Test Case</Button>
-            {/*{clickedPlus ? <BaseTestCases/>: null}*/}
+            {clickedPlus ? <div className="added-tests"><BaseTestCases/></div>: null}
         </div>
 
     const [clickedPlus, setClickedPlus] = useState(false);
@@ -154,7 +154,7 @@ function AssignmentsTreeBrowser({login, classes}) {
             <div className="instructions">
                 <Text color="primary" size="large" weight="bold">Enter the assigned point value, input, and expected output for each test case in boxes below.  Then click on the appropriate assignment.</Text>
             </div>
-            <div className="test-cases">
+            <div className="base-test-case">
                 <BaseTestCases/>
                 <AddTest/>
                 {/*<div className="add-test">*/}
