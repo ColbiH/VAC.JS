@@ -1,8 +1,8 @@
 .sidebar {
     /*width: 100%;*/
+    position: sticky;
     float: left;
     height: 150vh;
-    /*overflow: hidden;*/
-    position: sticky;
+    overflow: hidden;
     top: 0;
 }

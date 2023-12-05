@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import LaTeXWasm from "./LaTeX.wasm";
 //import { FetchQuizQuestions } from './FetchQuizQuestions';
-import {Checkbox, NumberInput} from "@instructure/ui";
+import {NumberInput} from "@instructure/ui";
 
 function extractContentBetweenPTags(inputString) {
     const parser = new DOMParser();
@@ -196,7 +196,6 @@ function Template(data, essayVspace, courseName, quizName) {
 
         return (
             <div>
-
                 <div className={"free-response"}>
                     <NumberInput renderLabel="How many lines would you like for free-response questions?"
                                  showArrows={false}

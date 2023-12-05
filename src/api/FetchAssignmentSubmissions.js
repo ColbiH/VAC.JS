@@ -193,12 +193,12 @@ function FetchAssignmentSubmissions() {
             </div>
 
             <div className="download-button">
-                <Button color="secondary" margin="small" onClick={() => handleDownloadSubmissions(location)}>Download All  <IconDownloadLine/></Button>
+                <Button color="secondary" margin="small" onClick={() => handleDownloadSubmissions(location)}>Download All Submissions  <IconDownloadLine/></Button>
             </div>
 
-            <div className="toggle">
-                <Checkbox label="Publish grades" value="medium" variant="toggle" />
-            </div>
+            {/*<div className="toggle">*/}
+            {/*    <Checkbox label="Publish grades" value="medium" variant="toggle" />*/}
+            {/*</div>*/}
 
             <div className="assignment-table">
                 <Table

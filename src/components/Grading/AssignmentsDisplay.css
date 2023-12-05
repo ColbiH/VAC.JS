@@ -32,11 +32,13 @@
 */
 .points {
     position: relative;
+    overflow: hidden;
 }
 
 .input {
     position: relative;
     left: -200px;
+    overflow: hidden;
 }
 
 .output {
@@ -48,6 +50,7 @@
     position: relative;
     top: -90px;
     left: 675px;
+    /*overflow: hidden;*/
 }
 
 .assignment-tree {

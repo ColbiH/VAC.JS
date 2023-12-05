@@ -12,6 +12,7 @@ function Sidebar() {
     //const { state: { login } = {} } = useLocation();
     const navigate = useNavigate();
     const location = useLocation();
+    //const viewHeight = window.outerHeight;
 
     return (
         <div className = "sidebar">
