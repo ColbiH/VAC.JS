@@ -116,7 +116,7 @@ function AssignmentsTreeBrowser({login, classes}) {
         </FormFieldGroup>
 
     const AddTest = () =>
-        <div className="add-test">
+        <div className="add-test-btn">
             <Button
                 renderIcon={IconAddLine}
                 onClick={setPlus}>Add Test Case</Button>

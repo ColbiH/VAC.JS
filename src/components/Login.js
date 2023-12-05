@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import {Button, InstUISettingsProvider, TextInput} from "@instructure/ui";
+import { Alert } from '@instructure/ui-alerts';
 import './Login.css';
 import {useNavigate} from "react-router-dom";
 import logo from './images/vacjs-high-resolution-logo-transparent.png';
@@ -17,6 +18,11 @@ function Login() {
 
     return (
         <InstUISettingsProvider theme={{ fontFamily: 'Arial', fontSize: '16px' }}>
+            <div className='alert'>
+                    <Alert variant="error" margin="small" timeout={5000}>
+                        ERROR: The API Key or URL is invalid! Please try again.
+                    </Alert>
+            </div>
             <div className="login-container">
                 <div className="login-form">
 
