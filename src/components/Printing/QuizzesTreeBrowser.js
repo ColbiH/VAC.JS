@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import {Pagination, TreeBrowser} from "@instructure/ui";
+import {TreeBrowser} from "@instructure/ui";
 import "./QuizzesDisplay.css";
 import FetchQuizQuestions from "../../api/FetchQuizQuestions";
 import Sidebar from "../Sidebar";
-
+//TreeBrowser has a unique setup with collections and items
+//These two functions were made to return the proper data to a Treebrowser acceptable form
+//Both functions also come in handy when attempting to access the base data structure which holds all of the data upon clicking on an item
+//Acts almost identically to the AssignmentTreeBrowser
 function transformDataForTreeBrowser(classes) {
     const collections = {
         1: {
@@ -79,22 +82,10 @@ function transformDataForItems(classes) {
 
 function QuizzesTreeBrowser({login, classes}) {
     const [clickedItem, setClickedItem] = useState(null);
-    const [currentPage, setCurrentPage] = useState(0);
-
-    const setPages = (page) => {
-        setCurrentPage(page);
-    };
 
     const handleItemClick = (item) => {
         setClickedItem(item);
     };
-
-    const pages = Array.from(Array(9)).map((v, i) => <Pagination.Page
-        key={i}
-        onClick={setPages}
-        current={i === currentPage}>
-        {i + 1}
-    </Pagination.Page>);
 
     return (
         <>
@@ -110,23 +101,11 @@ function QuizzesTreeBrowser({login, classes}) {
                     rootId={1}
                     onItemClick={handleItemClick}
                 />
-                {/*<Pagination*/}
-                {/*    as="nav"*/}
-                {/*    margin="small"*/}
-                {/*    variant="compact"*/}
-                {/*    labelNext="Next Page"*/}
-                {/*    labelPrev="Previous Page"*/}
-                {/*    themeOverride={{*/}
-                {/*        margin: "small"*/}
-                {/*    }}*/}
-                {/*>*/}
-                {/*    {pages}*/}
-                {/*</Pagination>*/}
             </div>
 
-
             {clickedItem !== null && (
-                <FetchQuizQuestions login={login} course_id={transformDataForItems(classes)[clickedItem.id].course_id} course_name={transformDataForItems(classes)[clickedItem.id].course_name} quiz_id={clickedItem.id} quiz_name={transformDataForItems(classes)[clickedItem.id].name} />
+                //Key here causes FetchQuizQuestions to update. Prior to this selection of a quiz after the first was selected didn't work.
+                <FetchQuizQuestions key={clickedItem.id} login={login} course_id={transformDataForItems(classes)[clickedItem.id].course_id} course_name={transformDataForItems(classes)[clickedItem.id].course_name} quiz_id={clickedItem.id} quiz_name={transformDataForItems(classes)[clickedItem.id].name} />
             )}
         </>
     );

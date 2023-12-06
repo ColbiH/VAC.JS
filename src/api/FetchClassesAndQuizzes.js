@@ -11,6 +11,7 @@ function FetchClassesAndQuizzes() {
     const navigate = useNavigate();
     const url = 'https://' + location.state.login.canvas_url + '/api/v1/courses?enrollment_type=teacher&per_page=500';
 
+    // Fetches all Classes with Quizzes
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -38,7 +39,7 @@ function FetchClassesAndQuizzes() {
 
                 setClasses(classesWithQuizzes);
                 setIsLoading(false);
-
+                //Navigates to sam upon API completion with new state
                 navigate('/sam', { state: { login: location.state.login, classes: classesWithQuizzes } });
             } catch (error) {
                 console.error('Error fetching class data:', error);
@@ -48,6 +49,7 @@ function FetchClassesAndQuizzes() {
         fetchData();
     }, []);
 
+    //Spinner during API call
     if (isLoading) {
         return <div className='quiz-spinner'> <Spinner renderTitle="Loading" size="small" margin="0 0 0 medium" /> </div>;
     }

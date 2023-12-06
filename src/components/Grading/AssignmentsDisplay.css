@@ -11,17 +11,15 @@
     left: 100px;
     overflow: hidden;
     /*transform: translate(-50%, -50%);*/
-    /*margin: 15px; to add spacing between the test cases and other components nearby*/
-
 }
 
 /*.added-tests > fieldset { */
 .added-tests {
     position: relative;
-    /*top: 150px; */
-    left: -750px;
+    top: 75px; 
+    left: -675px;
     overflow: hidden;
-    margin: 75px;/*adds space between test cases*/
+    /*margin: 75px;adds space between test cases*/
 
 }
 
@@ -32,11 +30,13 @@
 */
 .points {
     position: relative;
+    overflow: hidden;
 }
 
 .input {
     position: relative;
     left: -200px;
+    overflow: hidden;
 }
 
 .output {
@@ -44,10 +44,11 @@
     left: -225px;
 }
 
-.add-test {
+.add-test-btn {
     position: relative;
     top: -90px;
     left: 675px;
+    /*overflow: hidden;*/
 }
 
 .assignment-tree {

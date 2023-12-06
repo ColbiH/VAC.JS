@@ -4,6 +4,8 @@ import {Button, InstUISettingsProvider, canvas, IconPrinterLine, IconGradebookLi
 import Sidebar from "./Sidebar";
 import './PrintVsGrade.css';
 
+//Selection of portion of the program
+//useNavigate uses React-Router
 function PrintVsGrade() {
     const location = useLocation();
     const navigate = useNavigate();

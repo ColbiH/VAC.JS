@@ -1,10 +1,15 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { exec } = require('child_process');
+const { shell } = require('electron');
 
 let mainWindow;
 
 
+//Function to compile and run Java code
+//This utilizes whatever default PATH Variable setup is used for Java
+//If a user has Java installed (JRE) then code will execute as the path variable is defined correctly
+//Works cross platform and is simple, but can result in unforseen issues in niche situations
 function compileAndRunJavaFile(filePath, testcases, callback) {
     let grade = 0;
     const compileAndRunCommand = `javac ${filePath} && java -cp ${path.dirname(filePath)} ${path.basename(filePath, '.java')}`;
@@ -12,17 +17,19 @@ function compileAndRunJavaFile(filePath, testcases, callback) {
     const javaProcess = exec(compileAndRunCommand, (error, stdout, stderr) => {
         if (error) {
             console.error('Exit Code:', error.code);
-            callback(0);
+            callback(-1);
         } else {
             console.log('Exit Code:', 0);
             callback(grade);
         }
     });
 
-    javaProcess.stdin.write(testcases.sampleInput+'\n');
+    //Deals with 1 basic test case
+    //Simple writing in of a string
     javaProcess.stdin.write(testcases.sampleInput+'\n');
     javaProcess.stdin.end();
 
+    //Sends back the grade
     javaProcess.stdout.on('data', data => {
         console.log('Java execution output:', data.toString());
         if (data.toString().trim() === testcases.expectedOutput.trim()){
@@ -31,51 +38,62 @@ function compileAndRunJavaFile(filePath, testcases, callback) {
     });
 }
 
-function compileAndRunCPPFile(filePath, callback) {
+//Same approach, but with C++
+//Works with any compiler that has been setup with g++ as PATH Variable.
+//Not as straight forward as Python or Java
+function compileAndRunCPPFile(filePath, testcases, callback) {
+    let grade = 0;
     const compileAndRunCommand = `g++ ${filePath} -o ${path.basename(filePath, '.cpp')} && ./${path.basename(filePath, '.cpp')}`;
-
     const cppProcess = exec(compileAndRunCommand, (error, stdout, stderr) => {
         if (error) {
             console.error('Exit Code:', error.code);
-            callback(0);
+            callback(-1);
         } else {
             console.log('Exit Code:', 0);
-            callback(100);
+            callback(grade);
         }
     });
 
-    cppProcess.stdin.write('2\n');
-    cppProcess.stdin.write('2\n');
+    cppProcess.stdin.write(testcases.sampleInput+'\n');
     cppProcess.stdin.end();
 
     cppProcess.stdout.on('data', data => {
         console.log('C++ execution output:', data.toString());
+        if (data.toString().trim() === testcases.expectedOutput.trim()){
+            grade += testcases.points;
+        }
     });
 }
 
-function compileAndRunPythonFile(filePath, callback) {
+//Same as Java, utilizes default Python PATH installation as well
+function compileAndRunPythonFile(filePath, testcases, callback) {
+    let grade = 0;
     const runCommand = `python ${filePath}`;
 
     const pythonProcess = exec(runCommand, (error, stdout, stderr) => {
         if (error) {
             console.error('Exit Code:', error.code);
-            callback(100);
+            callback(-1);
         } else {
             console.log('Exit Code:', 0);
-            callback(0);
+            callback(grade);
         }
     });
 
-    pythonProcess.stdin.write('2\n');
-    pythonProcess.stdin.write('2\n');
+    pythonProcess.stdin.write(testcases.sampleInput+'\n');
     pythonProcess.stdin.end();
 
     pythonProcess.stdout.on('data', data => {
         console.log('Python execution output:', data.toString());
+        if (data.toString().trim() === testcases.expectedOutput.trim()){
+            grade += testcases.points;
+        }
     });
 }
 
 function createWindow() {
+    //API call routed through Electron
+    //This is done as a solution to CORS issues
     ipcMain.handle('fetch-canvas', async (event, { url, options }) => {
         try {
             const response = await fetch(url, options);
@@ -86,7 +104,7 @@ function createWindow() {
         }
     });
 
-//Download Files
+//Download Files and saves them to a folder /downloads
     ipcMain.on('download', (event, { payload }) => {
         const { fileUrl, testcases } = payload;
 
@@ -99,7 +117,8 @@ function createWindow() {
             const savePath = path.join(downloadPath, item.getFilename());
             let grade = 0;
             item.setSavePath(savePath);
-
+            //When download is complete program is compiled and run
+            //Grade is then returned to the react application
             item.once('done', (event, state) => {
                 if (state === 'completed') {
                     const fileExtension = path.extname(savePath);
@@ -127,18 +146,29 @@ function createWindow() {
         });
     });
 
+    //Opens link in default browser in any OS
+    ipcMain.on('link', (url) => {
+        shell.openExternal(url);
+    });
+
+    //Initializes the Electron application
     mainWindow = new BrowserWindow({
         width: 1200,
         height: 700,
         title: 'VAC.JS',
         webPreferences: {
             contextIsolation: true,
+            //Needs to preload compatibility layer with react application
             preload: path.join(__dirname, 'preload.js')
         },
     });
 
+    //Loads React APP
+    //This can often load BEFORE React is ready
+    //Refresh if this happens
     mainWindow.loadURL('http://localhost:3000');
 
+    //Opens debug tools
     mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', function () {

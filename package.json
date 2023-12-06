@@ -19,9 +19,12 @@
     "react-native-web": "^0.19.9",
     "react-pdf": "^7.4.0",
     "react-router-dom": "^6.16.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "styled-components": "^6.0.8",
     "web-vitals": "^2.1.4"
+  },
+  "_comment": {
+    "Script Comment": "Often the react server will load after the electron causing a white screen. This can be dealt with by refreshing the electron application"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run react\" \"npm run electron\"",

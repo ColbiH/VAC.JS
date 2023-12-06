@@ -68,3 +68,8 @@
     height: 40vmin;
     pointer-events: none;
 }
+
+.alert {
+    left: 27%;
+    width: 550px;
+}

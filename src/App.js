@@ -1,10 +1,6 @@
 import React from 'react';
 import { Routes, Route} from 'react-router-dom';
-import Jenny from './legacy/Jenny';
-import BackEnd from './legacy/BackEnd';
 import Login from './components/Login';
-import FrontEnd from "./legacy/FrontEnd";
-import Intro from "./components/Intro";
 import PrintVsGrade from "./components/PrintVsGrade";
 import './App.css';
 import FetchClassesAndQuizzes from "./api/FetchClassesAndQuizzes";
@@ -13,6 +9,7 @@ import AssignmentsDisplay from "./components/Grading/AssignmentsDisplay";
 import QuizzesDisplay from "./components/Printing/QuizzesDisplay";
 import FetchAssignmentSubmissions from "./api/FetchAssignmentSubmissions";
 
+//React Router setup in the root of the application
 function App() {
     return (
         // <div className="App">
@@ -34,11 +31,6 @@ function App() {
                 <Route path = "/fetchclassesassignments" element = {<FetchClassesAndAssignments />} />
                 <Route path = "/assignmentsam" element = {<AssignmentsDisplay/>} />
                 <Route path = "/fetchsassignmentsubmissions" element = {<FetchAssignmentSubmissions />} />
-
-                {/* Legacy Pages Pending Deletion */}
-                <Route path = "/jenny" element = {<Jenny />} />
-                <Route path = "/valentina" element = {<FrontEnd />} />
-                <Route path = "/backend" element = {<BackEnd />} />
             </Routes>
         // </div>
     );
