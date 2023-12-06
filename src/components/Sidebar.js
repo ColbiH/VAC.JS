@@ -8,6 +8,9 @@ import {useLocation, useNavigate} from "react-router-dom";
 import logo from './images/vacjs-high-resolution-logo-white-transparent.png';
 import "./Sidebar.css";
 
+//Sidebar which has basic navigation
+//Isn't located in the correct location as there exists a <div> above which messes up the formatting, or css is simply not correct
+//This results in white space below the sidebar when scrolling and when closing the sidebar it stays open a bit with a scroll bar
 function Sidebar() {
     //const { state: { login } = {} } = useLocation();
     const navigate = useNavigate();

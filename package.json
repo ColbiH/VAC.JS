@@ -23,6 +23,9 @@
     "styled-components": "^6.0.8",
     "web-vitals": "^2.1.4"
   },
+  "_comment": {
+    "Script Comment": "Often the react server will load after the electron causing a white screen. This can be dealt with by refreshing the electron application"
+  },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run react\" \"npm run electron\"",
     "electron": "electron .",

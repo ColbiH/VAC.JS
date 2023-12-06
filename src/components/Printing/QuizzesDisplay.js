@@ -3,6 +3,7 @@ import "./QuizzesDisplay.css";
 import {useLocation} from "react-router-dom";
 import QuizzesTreeBrowser from "./QuizzesTreeBrowser";
 
+//Another component which could be combined with the sub component, but was originally created for sub dividing main pages
 function QuizzesDisplay() {
     const location = useLocation();
 

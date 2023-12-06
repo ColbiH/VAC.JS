@@ -3,7 +3,10 @@ import {TreeBrowser} from "@instructure/ui";
 import "./QuizzesDisplay.css";
 import FetchQuizQuestions from "../../api/FetchQuizQuestions";
 import Sidebar from "../Sidebar";
-
+//TreeBrowser has a unique setup with collections and items
+//These two functions were made to return the proper data to a Treebrowser acceptable form
+//Both functions also come in handy when attempting to access the base data structure which holds all of the data upon clicking on an item
+//Acts almost identically to the AssignmentTreeBrowser
 function transformDataForTreeBrowser(classes) {
     const collections = {
         1: {

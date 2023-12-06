@@ -9,6 +9,7 @@ import AssignmentsDisplay from "./components/Grading/AssignmentsDisplay";
 import QuizzesDisplay from "./components/Printing/QuizzesDisplay";
 import FetchAssignmentSubmissions from "./api/FetchAssignmentSubmissions";
 
+//React Router setup in the root of the application
 function App() {
     return (
         // <div className="App">

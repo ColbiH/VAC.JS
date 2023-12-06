@@ -14,7 +14,11 @@ import "./AssignmentsDisplay.css"
 import Sidebar from "../Sidebar";
 import FetchAssignmentSubmissions from "../../api/FetchAssignmentSubmissions";
 
-
+//TreeBrowser has a unique setup with collections and items
+//These two functions were made to return the proper data to a Treebrowser acceptable form
+//Both functions also come in handy when attempting to access the base data structure which holds all of the data upon clicking on an item
+//Acts almost identically to the QuizzesTreeBrowser
+//Reuses some variable names for QuizzesTreeBrowser, but results in the correct data we need
 function transformDataForTreeBrowser(classes) {
     const collections = {
         1: {
@@ -92,6 +96,7 @@ function transformDataForItems(classes) {
 
 
 function AssignmentsTreeBrowser({login, classes}) {
+    //Test Cases
     const BaseTestCases = () =>
         <FormFieldGroup
             // description="Test Cases"
@@ -115,6 +120,8 @@ function AssignmentsTreeBrowser({login, classes}) {
             </div>
         </FormFieldGroup>
 
+    //An additional test case
+    //Never passed on to the next component
     const AddTest = () =>
         <div className="add-test-btn">
             <Button
@@ -135,6 +142,7 @@ function AssignmentsTreeBrowser({login, classes}) {
         setClickedPlus(true);
     };
 
+    //Navigate to "CodeGrader" portion of code
     const handleItemClick = async (item) => {
         navigate('/fetchsassignmentsubmissions', {
             state: {

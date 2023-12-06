@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FetchCanvas } from './FetchCanvas';
 import LaTeXBuilder from "../components/Printing/LaTeXBuilder";
 
+//Fetches QuizQuestions and passes them to LateXBuilder along with props
 function FetchQuizQuestions({login, course_id, course_name, quiz_id, quiz_name}) {
     const [data, setData] = useState([]);
     const url = 'https://' + login.canvas_url + '/api/v1/courses/' + course_id + '/quizzes/' + quiz_id + '/questions?per_page=500';

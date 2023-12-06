@@ -18,7 +18,8 @@ const modalStyle = {
         width: 400,
     },
 };
-
+//A component to hold TreeBrowser with additional components, but components were just nested inside of AssignmentsTreeBrowser instead
+//Could be combined into 1 component as all code here is useless and commented out
 function AssignmentsDisplay() {
     const [modalOpen, setModalOpen] = useState(false);
     const location = useLocation();

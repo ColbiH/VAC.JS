@@ -15,20 +15,6 @@ import {
 import Sidebar from "../components/Sidebar";
 import {Alert} from "@instructure/ui-alerts";
 
-
-
-const rows = [
-    {
-        id: '1',
-        Name: 'Alyssa LaSalle',
-        ID: '12456',
-        Submission: 'yes',
-        Download: 'https://ufl.instructure.com/ex1.cpp/download',
-        Grade_Status: 'yes',
-        Score: '100%'
-    },
-]
-
 function handleDownloadSubmissions(location) {
     const GEToptions = {
         method: 'GET',
@@ -83,6 +69,7 @@ function FetchAssignmentSubmissions() {
             Authorization: 'Bearer ' + location.state.login.api_key,
         },
     };
+    //Obtains all users and submission data and places into newRows.
     useEffect(() => {
         Promise.all([
             FetchCanvas(urlUser, GEToptions),
@@ -112,23 +99,26 @@ function FetchAssignmentSubmissions() {
     }, [graded]);
 
 
+    //Grading Button Function Call
     const handleButtonClick = async () => {
+        //Loops through all submissions for an assignment
         try {
             for (let i = 0; i < dataRef.current.length; i++) {
                 const submission = dataRef.current[i];
-
+                //Grabs first attachment if one exists
                 if (submission.attachments && submission.attachments.length > 0) {
                     const attachment = submission.attachments[0];
                     const submissionUrl = attachment.url;
                     console.log('Submission URL:', submissionUrl);
-
+                    //Calls on Electron.JS to handle downloading, compiling, and running against test cases
                     window.api.StartDownload(submissionUrl, location.state.testcases);
-
+                    //Listens for grade which if -1 is indication of an error
                     window.api.ListenForGrade((grade) => {
                         console.log('Grade:', grade);
                         if (grade === -1){
                             setError('One (or more) grading attempts failed due to improper test case or student submission');
                         } else {
+                            //Simple API call to update a user's grade
                             FetchCanvas(`${url}/${submission.user_id}?submission[posted_grade]=${grade}`, PUToptions);
                         }
                     });
@@ -138,10 +128,12 @@ function FetchAssignmentSubmissions() {
         } catch (error) {
             console.error('Error:', error);
         }
+            // Had issues with table never rerendering after a grading update
+            //This is a remnant of troubleshooting it
             setGraded(true);
     };
 
-
+    //Initialization of Headers for Table
     const headers = [
         {
             id: 'Name',

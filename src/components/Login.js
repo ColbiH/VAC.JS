@@ -18,7 +18,7 @@ function Login() {
         api_key: api_key,
         canvas_url: canvas_url
     };
-    // Simple Function that enables alert for wrong login information.
+    // Simple Function that enables alert for wrong login information. Utilizes a simple API call for courses
     async function login_test() {
         const url = 'https://' + canvas_url + '/api/v1/courses/';
         const GEToptions = {
@@ -32,6 +32,7 @@ function Login() {
         if (result.errors || result.error){
             setError('The API Key or URL is invalid! Please try again.');
         } else {
+            //Navigates to selection page if login info worked for simple API call
             navigate("/printvsgrade", { state: { login: login } });
         }
     }

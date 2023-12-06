@@ -11,10 +11,13 @@ import {Alert} from "@instructure/ui-alerts";
 function App({ template }) {
     const iframeRef = useRef(null);
     const [error, setError] = useState(null);
+    //Function that communicates with the IFrame layer where compilation of LaTeX takes place
+    //Not ideal, but it works till LaTeX wasm can be integrated in
     function compileLatexInIframe() {
         setError(null);
         const iframe = iframeRef.current;
         iframe.contentWindow.postMessage(template, '*');
+        //Error Handler
         window.addEventListener('message', (event) => {
             if (event.source === iframe.contentWindow) {
                 const data = event.data;
@@ -28,6 +31,7 @@ function App({ template }) {
 
     useEffect(() => {
         //Makes .WASM Invisible
+        //Very useful for debugging because when commenting out this IFrame display the log and LaTeX editor can be viewed
         iframeRef.current.style.display = 'none';
     }, []);
 

@@ -5,15 +5,24 @@ import {NumberInput} from "@instructure/ui";
 import { Alert } from '@instructure/ui-alerts';
 import './QuizzesDisplay.css'
 
+//question_text from Canvas API calls when returning a quiz question aren't LaTeX friendly
+//often has <script> and random HTML tags. DomParser is helpful to remove all tags
+
+//A few notes
+//question_text uses <br> and \n interchangeably so change <br> into \n so DomParser doesn't remove original <br>
+//lstlisting is great for putting raw text in that won't be seen as LaTeX language
+//lstlisting had a few formatting changes to match the default look of a quiz question
+//Most if not all LaTeX compilation errors are directly related to not parsing correctly and allowing code to spill into the LaTeX document
 function extractContentBetweenPTags(inputString) {
     const parser = new DOMParser();
     const doc3 = parser.parseFromString(inputString.replace(/<br>/g, '\n'), "text/html")
     const modifiedString = doc3.documentElement.textContent
     //console.log(modifiedString);
-
+    //No clue why {center} is needed, but didn't format correctly without it
     return '\\begin{center}\n' +
         '\\begin{lstlisting}[breaklines=true, basicstyle=\\rmfamily, columns=fullflexible, breakindent=0pt]\n' + modifiedString.replace(/\u00A0/g, ' ').trim() + '\n\\end{lstlisting} \\end{center}'
 }
+//Shuffles questions as API often can return correct answers first
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -21,7 +30,9 @@ function shuffleArray(array) {
     }
     return array;
 }
-
+//Obtains alt text from images where present
+//This doesn't parse fully and will break if HTML or problematic LaTeX is passed in
+//A more robust solution needs to be added
 function extractAltTextFromImages(inputString) {
     var tempElement = document.createElement('div');
     tempElement.innerHTML = inputString;
@@ -38,6 +49,8 @@ function extractAltTextFromImages(inputString) {
     return altTextArray;
 }
 
+//This is the default exam LaTeX template which dynamically creates the LaTeX document
+//Each question_type is accounted for and has special formatting or requests with the functions above
 function Template(data, essayVspace, courseName, quizName) {
     let LaTeXTemplate = "\\documentclass[addpoints]{exam}\n" +
         "\\usepackage{comment}\n" +
@@ -62,6 +75,7 @@ function Template(data, essayVspace, courseName, quizName) {
         "\\end{center}\n" +
         "\\begin{questions}\n"
 
+    //Loops through the array for all questions
     if (Array.isArray(data) && data.length > 0) {
         for (let i = 0; i < data.length; i++) {
             let questionType = data[i].question_type;
@@ -191,11 +205,14 @@ function Template(data, essayVspace, courseName, quizName) {
         console.log('Generated LaTeX:', data);
         const [essayVspace, setEssayVspace] = useState(10);
 
+        //Vspace acts as vertical spacing for a free response question
+        //This is varied because we can't anticipate how much space is needed for this type of question if program is to serve all types of courses
         const handleNumberInputChange = (event) => {
             setEssayVspace(event.target.value);
             console.log("Updated essayVspace:", event.target.value);
         };
 
+        //Asks for FRQ spacing and sends template to LaTeXWasm component.
         return (
             <div>
                 <div className={"free-response"}>
