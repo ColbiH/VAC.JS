@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { exec } = require('child_process');
 const { shell } = require('electron');
-
+const isDev = require('electron-is-dev');
 let mainWindow;
 
 
@@ -158,19 +158,24 @@ function createWindow() {
         title: 'VAC.JS',
         webPreferences: {
             contextIsolation: true,
+            nodeIntegration: true,
+            enableRemoteModule: true,
             //Needs to preload compatibility layer with react application
             preload: path.join(__dirname, 'preload.js')
         },
     });
 
     //Loads React APP
-    //This can often load BEFORE React is ready
-    //Refresh if this happens
-    mainWindow.loadURL('http://localhost:3000');
+    mainWindow.loadURL(
+        isDev
+            ? 'http://localhost:3000'
+            : `file://${path.join(__dirname, '../build/index.html')}`
+    );
 
     //Opens debug tools
-    mainWindow.webContents.openDevTools();
-
+    if (isDev){
+        mainWindow.webContents.openDevTools();
+    }
     mainWindow.on('closed', function () {
         mainWindow = null;
     });
@@ -184,5 +189,5 @@ app.on('window-all-closed', function () {
 });
 
 app.on('activate', function () {
-    if (mainWindow === null) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
