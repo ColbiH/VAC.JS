@@ -101,7 +101,8 @@ function QuizzesTreeBrowser({login, classes}) {
             </div>
 
             {clickedItem !== null && (
-                <FetchQuizQuestions login={login} course_id={transformDataForItems(classes)[clickedItem.id].course_id} course_name={transformDataForItems(classes)[clickedItem.id].course_name} quiz_id={clickedItem.id} quiz_name={transformDataForItems(classes)[clickedItem.id].name} />
+                //Key here causes FetchQuizQuestions to update. Prior to this selection of a quiz after the first was selected didn't work.
+                <FetchQuizQuestions key={clickedItem.id} login={login} course_id={transformDataForItems(classes)[clickedItem.id].course_id} course_name={transformDataForItems(classes)[clickedItem.id].course_name} quiz_id={clickedItem.id} quiz_name={transformDataForItems(classes)[clickedItem.id].name} />
             )}
         </>
     );

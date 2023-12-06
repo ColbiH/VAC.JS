@@ -409,6 +409,9 @@ IEEE conference templates contain guidance text for composing and formatting con
                 document.body.removeChild(downloadLink); // Remove the anchor element from the document
             }, 30000);
         }
+        if (r.status === 1){
+            window.parent.postMessage({ type: 'error', message: "Compilation Failed" }, '*');
+        }
 
     }
 

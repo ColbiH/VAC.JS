@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { exec } = require('child_process');
+const { shell } = require('electron');
 
 let mainWindow;
 
@@ -12,7 +13,7 @@ function compileAndRunJavaFile(filePath, testcases, callback) {
     const javaProcess = exec(compileAndRunCommand, (error, stdout, stderr) => {
         if (error) {
             console.error('Exit Code:', error.code);
-            callback(0);
+            callback(-1);
         } else {
             console.log('Exit Code:', 0);
             callback(grade);
@@ -37,7 +38,7 @@ function compileAndRunCPPFile(filePath, callback) {
     const cppProcess = exec(compileAndRunCommand, (error, stdout, stderr) => {
         if (error) {
             console.error('Exit Code:', error.code);
-            callback(0);
+            callback(-1);
         } else {
             console.log('Exit Code:', 0);
             callback(100);
@@ -59,7 +60,7 @@ function compileAndRunPythonFile(filePath, callback) {
     const pythonProcess = exec(runCommand, (error, stdout, stderr) => {
         if (error) {
             console.error('Exit Code:', error.code);
-            callback(100);
+            callback(-1);
         } else {
             console.log('Exit Code:', 0);
             callback(0);
@@ -125,6 +126,10 @@ function createWindow() {
                 }
             });
         });
+    });
+
+    ipcMain.on('link', (url) => {
+        shell.openExternal(url);
     });
 
     mainWindow = new BrowserWindow({

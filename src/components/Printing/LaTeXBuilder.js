@@ -208,11 +208,7 @@ function Template(data, essayVspace, courseName, quizName) {
                 </div>
                 <LaTeXWasm template={Template(data, essayVspace, courseName, quizName)}/>
 
-                <div className='alert'>
-                    <Alert variant="error" margin="small" timeout={5000}>
-                        ERROR: The program can only generate the pdf up to page __!
-                    </Alert>
-                </div>
+
 
 
             </div>

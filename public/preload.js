@@ -17,4 +17,7 @@ contextBridge.exposeInMainWorld("api", {
             callback(data.grade);
         });
     },
+    OpenLinkExternally: async (url) => {
+        ipcRenderer.send("link", url);
+    },
 });

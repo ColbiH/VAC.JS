@@ -13,6 +13,7 @@ import {
     Text
 } from '@instructure/ui';
 import Sidebar from "../components/Sidebar";
+import {Alert} from "@instructure/ui-alerts";
 
 
 
@@ -58,6 +59,7 @@ function FetchAssignmentSubmissions() {
     const [users, setUsers] = useState([]);
     const [rows, setRows] = useState([]);
     const dataRef = useRef([]);
+    const [error, setError] = useState(null);
     const location = useLocation();
     const url =
         'https://' +
@@ -124,7 +126,11 @@ function FetchAssignmentSubmissions() {
 
                     window.api.ListenForGrade((grade) => {
                         console.log('Grade:', grade);
-                        FetchCanvas(`${url}/${submission.user_id}?submission[posted_grade]=${grade}`, PUToptions);
+                        if (grade === -1){
+                            setError('One (or more) grading attempts failed due to improper test case or student submission');
+                        } else {
+                            FetchCanvas(`${url}/${submission.user_id}?submission[posted_grade]=${grade}`, PUToptions);
+                        }
                     });
                 }
             }
@@ -181,7 +187,13 @@ function FetchAssignmentSubmissions() {
             <div>
                 <Sidebar/>
             </div>
-
+            {error && (
+                <div className='alert'>
+                    <Alert variant="error" margin="small">
+                        ERROR: {error}
+                    </Alert>
+                </div>
+            )}
             <div className="assignment-name">
                 <Text color="primary" size="x-large" weight="bold">{location.state.quiz_name}</Text>
             </div>
@@ -232,9 +244,9 @@ function FetchAssignmentSubmissions() {
                                             )
                                         ) : id === 'Download' ? (
                                             row[id] === null ? null : (
-                                                <Link href={row[id]} target="_blank" rel="noopener noreferrer">
-                                                    Download
-                                                </Link>
+                                                <a href={row[id]} >
+                                                    <Button>Download</Button>
+                                                </a>
                                             )
                                         ) : (
                                             row[id]
